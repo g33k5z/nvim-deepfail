@@ -24,4 +24,5 @@ Story here is my painful switch to nvim from vim, but my supprising productivity
   - override/add translation for vim-regex to pcre
   - obsidian connector
   - finish setting up vimtex/latex everything
+
   
