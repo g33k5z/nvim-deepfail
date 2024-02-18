@@ -27,7 +27,7 @@ Story here is my painful switch to nvim from vim, but my supprising productivity
 
   
 # Keyremapping ftw? 
-###(caps_lock => escape, is my norm only mapping)
+### (caps_lock => escape, is my norm only mapping)
 Playing with Karabiner trying remap levels. Idea is ofc not move off base hand position as much as possible
 
 now tyring
