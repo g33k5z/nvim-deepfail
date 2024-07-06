@@ -46,7 +46,7 @@ lvim.builtin.treesitter.auto_install = true
 -- lvim.builtin.treesitter.ignore_install = { "haskell" }
 
 -- -- always installed on startup, useful for parsers without a strict filetype
--- lvim.builtin.treesitter.ensure_installed = { "comment", "markdown_inline", "regex" }
+lvim.builtin.treesitter.ensure_installed = { "python" } --"comment", "markdown_inline", "regex" }
 
 -- -- generic LSP settings <https://www.lunarvim.org/docs/configuration/language-features/language-servers>
 
@@ -76,6 +76,90 @@ lvim.builtin.treesitter.auto_install = true
 -- end
 
 -- -- linters, formatters and code actions <https://www.lunarvim.org/docs/configuration/language-features/linting-and-formatting>
+-- local null_ls = require("null-ls")
+
+
+
+local formatters = require "lvim.lsp.null-ls.formatters"
+formatters.setup { { name = "black" }, }
+
+-- local linters = require "lvim.lsp.null-ls.linters"
+-- linters.setup {
+--   { command = "flake8", args = { "--ignore=E203" }, filetypes = { "python" } },
+--   {
+--     command = "shellcheck",
+--     args = { "--severity", "warning" },
+--   },
+-- }
+
+
+--   {
+--     name = "prettier",
+--     ---@usage arguments to pass to the formatter
+--     -- these cannot contain whitespace
+--     -- options such as `--line-width 80` become either `{"--line-width", "80"}` or `{"--line-width=80"}`
+--     args = { "--print-width", "100" },
+--     ---@usage only start in these filetypes, by default it will attach to all filetypes it supports
+--     -- filetypes = { "typescript", "typescriptreact" },
+--   },
+-- }
+
+-- local linters = require "lvim.lsp.null-ls.linters"
+-- linters.setup {
+--   { name = "pyright" },
+--   {
+--     name = "shellcheck",
+--     args = { "--severity", "warning" },
+--   },
+-- }
+
+
+
+-- lvim.builtin.which_key.mappings["l"]["f"] = {
+--   function()
+--     require("lvim.lsp.utils").format { timeout_ms = 2000 }
+--   end,
+--   "Format",
+-- }
+
+-- Setup mason-null-ls and null-ls
+-- local null_ls = require("null-ls")
+-- local mason_null_ls = require("mason-null-ls")
+
+-- mason_null_ls.setup({
+--   ensure_installed = { "black" },
+--   automatic_installation = true,
+-- })
+
+-- null-ls setup
+-- require("mason-null-ls").setup({
+--   ensure_installed = { "black" }
+-- })
+
+-- local null_ls = require("null-ls")
+
+-- null_ls.setup({
+--   sources = {
+--     null_ls.builtins.formatting.black,
+--   },
+-- })
+-- require("mason").setup()
+-- require("null-ls").setup()
+
+-- require("mason-null-ls").setup({
+--   ensure_installed = nil,
+--   automatic_installation = true,
+-- })
+-- -- Setup mason-null-ls and null-ls
+-- local null_ls = require("null-ls")
+-- local mason_null_ls = require("mason-null-ls")
+
+-- mason_null_ls.setup({
+--   ensure_installed = { "black" },
+--   automatic_installation = true,
+-- })
+
+
 -- local formatters = require "lvim.lsp.null-ls.formatters"
 -- formatters.setup {
 --   { command = "stylua" },
@@ -109,6 +193,41 @@ lvim.builtin.treesitter.auto_install = true
 --   },
 -- }
 lvim.plugins = {
+  {
+    "folke/trouble.nvim",
+  },
+  {
+    "jay-babu/mason-null-ls.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "williamboman/mason.nvim",
+      "nvimtools/none-ls.nvim",
+    },
+    -- config = function()
+    --   require("your.null-ls.config") -- require your null-ls config here (example below)
+    -- end,
+  },
+  {
+    'edluffy/hologram.nvim',
+    config = function()
+      require('hologram').setup {
+        auto_display = true -- WIP automatic markdown image display, may be prone to breaking
+      }
+    end
+  },
+  {
+    'kwakzalver/duckytype.nvim',
+    config = function()
+      require('duckytype').setup {
+        number_of_words = 10,
+        highlight = {
+          good = "Comment",
+          bad = "Exception",
+          remaining = "Label",
+        },
+      }
+    end
+  },
   { 'ThePrimeagen/vim-be-good' },
   -- { 'ThePrimeagen/harpoon' },
   -- { 'ThePrimeagen/git-worktree.nvim' },
@@ -122,7 +241,7 @@ lvim.plugins = {
     -- requires = "kyazdani42/nvim-web-devicons",
     config = function()
       require("trouble").setup {
-        -- your configuration comes here
+        --edluffy/hologramedluffy/hologramedluffy/hologram your configuration comes here
         -- or leave it empty to use the default settings
         -- refer to the configuration section below
       }
@@ -155,11 +274,13 @@ lvim.plugins = {
   },
   {
     'nvim-telescope/telescope.nvim',
-    verson = '0.1.1',
+    tag = '0.1.6',
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
   {
-    'ThePrimeagen/harpoon'
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = { "nvim-lua/plenary.nvim" }
   },
   {
     'BurntSushi/ripgrep'
@@ -183,7 +304,26 @@ lvim.plugins = {
     "jackMort/ChatGPT.nvim",
     event = "VeryLazy",
     config = function()
-      require("chatgpt").setup()
+      require("chatgpt").setup({
+        openai_params = {
+          model = "gpt-4o",
+          frequency_penalty = 0,
+          presence_penalty = 0,
+          max_tokens = 4000,
+          temperature = 0,
+          top_p = 1,
+          n = 1,
+        },
+        openai_edit_params = {
+          model = "gpt-4o",
+          frequency_penalty = 0,
+          presence_penalty = 0,
+          temperature = 0,
+          top_p = 1,
+          n = 1,
+        },
+        use_openai_functions_for_edits = true,
+      })
     end,
     dependencies = {
       "MunifTanjim/nui.nvim",
@@ -223,6 +363,43 @@ local mason_path = vim.fn.glob(vim.fn.stdpath "data" .. "/mason/")
 pcall(function()
   require("dap-python").setup(mason_path .. "packages/debugpy/venv/bin/python")
 end)
+
+local harpoon = require('harpoon')
+harpoon:setup({})
+
+
+
+-- basic telescope configuration
+local conf = require("telescope.config").values
+local function toggle_telescope(harpoon_files)
+  local file_paths = {}
+  for _, item in ipairs(harpoon_files.items) do
+    table.insert(file_paths, item.value)
+  end
+
+  require("telescope.pickers").new({}, {
+    prompt_title = "Harpoon",
+    finder = require("telescope.finders").new_table({
+      results = file_paths,
+    }),
+    previewer = conf.file_previewer({}),
+    sorter = conf.generic_sorter({}),
+  }):find()
+end
+
+vim.keymap.set("n", "<C-e>", function() toggle_telescope(harpoon:list()) end,
+  { desc = "Open harpoon window" })
+
+-- Add this section to your `config.lua` file
+lvim.builtin.which_key.mappings.m = {
+  name = "Harpoon",
+  a = { "<cmd>lua require('harpoon.mark').add_file()<CR>", "Add File" },
+  m = { "<cmd>lua require('harpoon.ui').toggle_quick_menu()<CR>", "Menu" },
+  ["1"] = { "<cmd>lua require('harpoon.ui').nav_file(1)<CR>", "File 1" },
+  ["2"] = { "<cmd>lua require('harpoon.ui').nav_file(2)<CR>", "File 2" },
+  ["3"] = { "<cmd>lua require('harpoon.ui').nav_file(3)<CR>", "File 3" },
+  ["4"] = { "<cmd>lua require('harpoon.ui').nav_file(4)<CR>", "File 4" },
+}
 
 -- -- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>
 -- vim.api.nvim_create_autocmd("FileType", {
