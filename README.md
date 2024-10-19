@@ -8,6 +8,7 @@ Story here is my painful switch to nvim from vim, but my supprising productivity
   - Python everything (shutup)
     - LSP: pyright
     - Debugger: degubpy, DAP  
+    - Formatters: ruff, black, prettify
   - Copilot.nvim/.lua: suggestions are kinda garbo, grabbed the lua version, fuck the cmp integration, ghosting is better
   - ChatGPT.nvim: Has some good bones, hacking it into something useful. So far model/token max updates while I learn the package
   - Vimtex: for latex math notes, but is in some kinda fuggly state
@@ -29,7 +30,7 @@ Story here is my painful switch to nvim from vim, but my supprising productivity
 ### Keyremapping ftw? 
 #### (caps_lock => escape, is my norm only mapping)
 - Trying [Dygma Defy](https://dygma.com/pages/defy) split keybort
-    - layer keymaps in folder
+ 
 
 ### Term misc
 - https://starship.rs/
