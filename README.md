@@ -16,7 +16,7 @@ Story here is my painful switch to nvim from vim, but my supprising productivity
 - whichkey
   - Got ChatGPT more or less up
   - Copilot is a pita so far to remap in WK
-
+  - folke/trouble mapped
 - TODOs
   - cmp: move this spam further away from the cursor
   - copilot WK mapping
@@ -28,13 +28,8 @@ Story here is my painful switch to nvim from vim, but my supprising productivity
   
 ### Keyremapping ftw? 
 #### (caps_lock => escape, is my norm only mapping)
-Playing with Karabiner trying remap levels. Idea is ofc not move off base hand position as much as possible
-
-now tyring
-- caps_lock => fn (using fn as level 1)
-  -  j => backspace_or_delete
-  -  h => escape
--   - right_command => backspace_or_delete
+- Trying [Dygma Defy](https://dygma.com/pages/defy) split keybort
+    - layer keymaps in folder
 
 ### Term misc
 - https://starship.rs/
