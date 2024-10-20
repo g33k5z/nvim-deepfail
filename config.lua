@@ -1,44 +1,14 @@
---[[
- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
- `lvim` is the global options object
-]]
--- vim options
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
+
+-- Read the docs: https://www.lunarvim.org/docs/configuration
+-- Video Tutorials: https://www.youtube.com/watch?v=sFA9kX-Ud_c&list=PLhoH5vyxr6QqGu0i7tt_XoVK9v-KvZ3m6
+-- Forum: https://www.reddit.com/r/lunarvim/
+-- Discord: https://discord.com/invite/Xb9B4Ny
+
+-- tailwind-tools.lua
+
+-- Enable relative line numbers
 vim.opt.relativenumber = true
-
--- general
-lvim.log.level = "info"
-lvim.format_on_save = {
-  enabled = true,
-  pattern = "*.lua",
-  timeout = 1000,
-}
--- to disable icons and use a minimalist setup, uncomment the following
--- lvim.use_icons = false
-
--- keymappings <https://www.lunarvim.org/docs/configuration/keybindings>
-lvim.leader = "space"
--- add your own keymapping
-lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
-
-vim.g.transparent_background = true
--- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
--- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
-
--- -- Use which-key to add extra bindings with the leader-key prefix
--- lvim.builtin.which_key.mappings["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
--- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
-
-
--- -- Change theme settings
--- lvim.colorscheme = "lunar"
-
-lvim.builtin.alpha.active = true
-lvim.builtin.alpha.mode = "dashboard"
-lvim.builtin.terminal.active = true
-lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
+vim.opt.number = true -- Keep the current line number absolute
 
 -- Automatically install missing parsers when entering buffer
 lvim.builtin.treesitter.auto_install = true
@@ -50,161 +20,37 @@ lvim.builtin.treesitter.ensure_installed = { "python" } --"comment", "markdown_i
 
 -- -- generic LSP settings <https://www.lunarvim.org/docs/configuration/language-features/language-servers>
 
--- --- disable automatic installation of servers
--- lvim.lsp.installer.setup.automatic_installation = false
+lvim.lsp.installer.setup.ensure_installed = {
+  "pyright"
+}
 
--- ---configure a server manually. IMPORTANT: Requires `:LvimCacheReset` to take effect
--- ---see the full default list `:lua =lvim.lsp.automatic_configuration.skipped_servers`
--- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" })
--- local opts = {} -- check the lspconfig documentation for a list of all possible options
--- require("lvim.lsp.manager").setup("pyright", opts)
-
--- ---remove a server from the skipped list, e.g. eslint, or emmet_ls. IMPORTANT: Requires `:LvimCacheReset` to take effect
--- ---`:LvimInfo` lists which server(s) are skipped for the current filetype
--- lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
---   return server ~= "emmet_ls"
--- end, lvim.lsp.automatic_configuration.skipped_servers)
-
--- -- you can set a custom on_attach function that will be used for all the language servers
--- -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
--- lvim.lsp.on_attach_callback = function(client, bufnr)
---   local function buf_set_option(...)
---     vim.api.nvim_buf_set_option(bufnr, ...)
---   end
---   --Enable completion triggered by <c-x><c-o>
---   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
--- end
-
--- -- linters, formatters and code actions <https://www.lunarvim.org/docs/configuration/language-features/linting-and-formatting>
--- local null_ls = require("null-ls")
-
+require('lspconfig').pyright.setup {
+  on_attach = require('lvim.lsp').common_on_attach,
+  capabilities = require('lvim.lsp').common_capabilities(),
+}
 
 
 local formatters = require "lvim.lsp.null-ls.formatters"
-formatters.setup { { name = "black" }, }
+formatters.setup {
+  { name = "black" },
+  {
+    name = "prettier",
+    ---@usage arguments to pass to the formatter
+    -- these cannot contain whitespace
+    -- options such as `--line-width 80` become either `{"--line-width", "80"}` or `{"--line-width=80"}`
+    args = { "--print-width", "100" },
+    ---@usage only start in these filetypes, by default it will attach to all filetypes it supports
+    filetypes = { "typescript", "typescriptreact", "html" },
+  },
+}
 
--- local linters = require "lvim.lsp.null-ls.linters"
--- linters.setup {
---   { command = "flake8", args = { "--ignore=E203" }, filetypes = { "python" } },
---   {
---     command = "shellcheck",
---     args = { "--severity", "warning" },
---   },
--- }
-
-
---   {
---     name = "prettier",
---     ---@usage arguments to pass to the formatter
---     -- these cannot contain whitespace
---     -- options such as `--line-width 80` become either `{"--line-width", "80"}` or `{"--line-width=80"}`
---     args = { "--print-width", "100" },
---     ---@usage only start in these filetypes, by default it will attach to all filetypes it supports
---     -- filetypes = { "typescript", "typescriptreact" },
---   },
--- }
-
--- local linters = require "lvim.lsp.null-ls.linters"
--- linters.setup {
---   { name = "pyright" },
---   {
---     name = "shellcheck",
---     args = { "--severity", "warning" },
---   },
--- }
-
-
-
--- lvim.builtin.which_key.mappings["l"]["f"] = {
---   function()
---     require("lvim.lsp.utils").format { timeout_ms = 2000 }
---   end,
---   "Format",
--- }
-
--- Setup mason-null-ls and null-ls
--- local null_ls = require("null-ls")
--- local mason_null_ls = require("mason-null-ls")
-
--- mason_null_ls.setup({
---   ensure_installed = { "black" },
---   automatic_installation = true,
--- })
-
--- null-ls setup
--- require("mason-null-ls").setup({
---   ensure_installed = { "black" }
--- })
-
--- local null_ls = require("null-ls")
-
--- null_ls.setup({
---   sources = {
---     null_ls.builtins.formatting.black,
---   },
--- })
--- require("mason").setup()
--- require("null-ls").setup()
-
--- require("mason-null-ls").setup({
---   ensure_installed = nil,
---   automatic_installation = true,
--- })
--- -- Setup mason-null-ls and null-ls
--- local null_ls = require("null-ls")
--- local mason_null_ls = require("mason-null-ls")
-
--- mason_null_ls.setup({
---   ensure_installed = { "black" },
---   automatic_installation = true,
--- })
-
-
--- local formatters = require "lvim.lsp.null-ls.formatters"
--- formatters.setup {
---   { command = "stylua" },
---   {
---     command = "prettier",
---     extra_args = { "--print-width", "100" },
---     filetypes = { "typescript", "typescriptreact" },
---   },
--- }
--- local linters = require "lvim.lsp.null-ls.linters"
--- linters.setup {
---   { command = "flake8", filetypes = { "python" } },
---   {
---     command = "shellcheck",
---     args = { "--severity", "warning" },
---   },
--- }
--- local code_actions = require "lvim.lsp.null-ls.code_actions"
--- code_actions.setup {
---   {
---     exe = "eslint",
---     filetypes = { "typescript", "typescriptreact" },
---   },
--- }
-
--- -- Additional Plugins <https://www.lunarvim.org/docs/configuration/plugins/user-plugins>
--- lvim.plugins = {
---   {
---     "folke/trouble.nvim",
---     cmd = "TroubleToggle",
---   },
--- }
-
-
-vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, {  "html" })
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "html" })
 local opts = {
   filetypes = { "html", "htmldjango" }
 }
+
 require("lvim.lsp.manager").setup("html", opts)
-
-
 lvim.plugins = {
-  {
-    "folke/trouble.nvim",
-  },
   {
     "jay-babu/mason-null-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
@@ -220,7 +66,7 @@ lvim.plugins = {
     'edluffy/hologram.nvim',
     config = function()
       require('hologram').setup {
-        auto_display = true -- WIP automatic markdown image display, may be prone to breaking
+        auto_display = true, -- WIP automatic markdown image display
       }
     end
   },
@@ -246,16 +92,26 @@ lvim.plugins = {
   -- { 'ThePrimeagen/telescope-ghq.nvim' },
   -- { 'ThePrimeagen/telescope-tmux' },
   {
-    "folke/lsp-trouble.nvim",
-    -- requires = "kyazdani42/nvim-web-devicons",
+    "folke/trouble.nvim",
     config = function()
       require("trouble").setup {
-        --edluffy/hologramedluffy/hologramedluffy/hologram your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
+        mode = "lsp_document_symbols",  -- or "lsp_workspace_symbols" for workspace-level symbols
+        -- auto_open = true,               -- Automatically open Trouble window when issues arise
+        use_diagnostic_signs = true,    -- Use icons from LSP for diagnostics
       }
-    end
+    end,
   },
+  -- {
+  --   "folke/lsp-trouble.nvim",
+  --   -- requires = "kyazdani42/nvim-web-devicons",
+  --   config = function()
+  --     require("trouble").setup {
+  --       --edluffy/hologramedluffy/hologramedluffy/hologram your configuration comes here
+  --       -- or leave it empty to use the default settings
+  --       -- refer to the configuration section below
+  --     }
+  --   end
+  -- },
   -- {
   --   "ellisonleao/glow.nvim",
   --   config = function()
@@ -283,7 +139,7 @@ lvim.plugins = {
   },
   {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.6',
+    version = '0.1.6',
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
   {
@@ -306,7 +162,51 @@ lvim.plugins = {
     cmd = "Copilot",
     event = "InsertEnter",
     config = function()
-      require("copilot").setup({})
+      -- require("copilot").setup({})
+      require('copilot').setup({
+        panel = {
+          enabled = true,
+          auto_refresh = true,
+          keymap = {
+            jump_prev = "[[",
+            jump_next = "]]",
+            accept = "<CR>",
+            refresh = "gr",
+            open = "<M-CR>"
+          },
+          layout = {
+            position = "bottom", -- | top | left | right
+            ratio = 0.4
+          },
+        },
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          hide_during_completion = true,
+          debounce = 75,
+          keymap = {
+            accept = "<M-l>",
+            accept_word = false,
+            accept_line = false,
+            next = "<M-]>",
+            prev = "<M-[>",
+            dismiss = "<C-]>",
+          },
+        },
+        filetypes = {
+          yaml = false,
+          markdown = false,
+          help = false,
+          gitcommit = false,
+          gitrebase = false,
+          hgcommit = false,
+          svn = false,
+          cvs = false,
+          ["."] = false,
+        },
+        copilot_node_command = 'node', -- Node.js version must be > 18.x
+        server_opts_overrides = {},
+      })
     end
   },
   {
@@ -341,6 +241,12 @@ lvim.plugins = {
       "nvim-telescope/telescope.nvim"
     }
   },
+  {
+    "luckasRanarison/tailwind-tools.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    opts = {}   -- your configuration
+  },
+
   "mfussenegger/nvim-dap-python",
   "nvim-neotest/neotest",
   "nvim-neotest/neotest-python",
