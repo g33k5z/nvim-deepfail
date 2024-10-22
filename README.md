@@ -18,6 +18,7 @@ Story here is my painful switch to nvim from vim, but my supprising productivity
   - Got ChatGPT more or less up
   - Copilot is a pita so far to remap in WK
   - folke/trouble mapped
+
 - TODOs
   - cmp: move this spam further away from the cursor
   - copilot WK mapping
@@ -26,7 +27,7 @@ Story here is my painful switch to nvim from vim, but my supprising productivity
   - obsidian connector
   - finish setting up vimtex/latex everything
 
-  
+
 ### Keyremapping ftw? 
 #### (caps_lock => escape, is my norm only mapping)
 - Trying [Dygma Defy](https://dygma.com/pages/defy) split keybort
