@@ -18,6 +18,7 @@ Story here is my painful switch to nvim from vim, but my supprising productivity
   - Got ChatGPT more or less up
   - Copilot is a pita so far to remap in WK
   - folke/trouble mapped
+  - ThePrimeagen/refactoring mapped 
 
 - TODOs
   - cmp: move this spam further away from the cursor
