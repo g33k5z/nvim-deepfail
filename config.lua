@@ -1,4 +1,3 @@
-
 -- Read the docs: https://www.lunarvim.org/docs/configuration
 -- Video Tutorials: https://www.youtube.com/watch?v=sFA9kX-Ud_c&list=PLhoH5vyxr6QqGu0i7tt_XoVK9v-KvZ3m6
 -- Forum: https://www.reddit.com/r/lunarvim/
@@ -75,6 +74,7 @@ lvim.plugins = {
 
 			local null_ls = require("null-ls")
 			null_ls.setup({
+				timeout_ms = 10000, -- Extend timeout to 10 seconds
 				sources = {
 					null_ls.builtins.formatting.stylua,
 				},
@@ -342,5 +342,3 @@ lvim.builtin.which_key.mappings.m = {
 --     require("nvim-treesitter.highlight").attach(0, "bash")
 --   end,
 -- })
-
-
