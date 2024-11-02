@@ -28,6 +28,12 @@ Story here is my painful switch to nvim from vim, but my supprising productivity
   - obsidian connector
   - finish setting up vimtex/latex everything
 
+- tmux
+    - config added
+    - reserection kinda works? panes/windows restore, nvim state still a wip
+
+- starship
+    - config added
 
 ### Keyremapping ftw? 
 - caps_lock => escape, is my norm only mapping
