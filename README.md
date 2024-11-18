@@ -120,3 +120,66 @@ Story here is my painful switch to nvim from vim, but my supprising productivity
     ● vimtex 1.96ms  start
     ● which-key.nvim 26.78ms  VeryLazy
 
+
+## Setup (macOS)
+
+### nvim >= 0.10.x
+
+Install
+```shell
+brew install neovim
+
+# https://github.com/neovim/neovim/blob/master/INSTALL.md
+```
+
+
+Refresh shell (or restart it) and check version
+```shell
+source ~/.zshrc
+
+nvim --version
+
+#  NVIM v0.10.2
+#  Build type: Release
+#  LuaJIT 2.1.1727870382
+#  Run "nvim -V1 -v" for more info
+```
+
+### LunarVim (Nightly)
+```shell
+bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
+
+# https://www.lunarvim.org/docs/installation
+```
+
+### tmux
+```shell
+brew install tmux
+
+# https://github.com/tmux/tmux/wiki/Installing
+```
+
+#### Config
+copy `.tmux.config` to `$HOME` | `~/`
+
+https://github.com/tmux/tmux/wiki/Getting-Started#configuring-tmux
+
+#### tmux package manager
+```shell
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+# https://github.com/tmux-plugins/tpm
+```
+
+
+#### tmuxifier
+```shell
+git clone https://github.com/jimeh/tmuxifier.git ~/.tmuxifier
+
+export PATH="$HOME/.tmuxifier/bin:$PATH"
+
+
+# https://github.com/jimeh/tmuxifier
+```
+
+
