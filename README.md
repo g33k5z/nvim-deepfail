@@ -1,6 +1,13 @@
 # My nvim config, a study in deepfail
 young bones heal quickly edition
 
+
+
+![inglourious basterds](images/ex_layout_result.png)
+
+
+
+
 Story here is my painful switch to nvim from vim, but my supprising productivity now that I don't spend all day tweaking a custom color theme
 
 - Grabbed lunarvim as a base (shutup)
@@ -234,59 +241,4 @@ export DEV_ROOT="~/dev/github"
 ```
 
 ##### Example tmuxifier layout (the one I use for this repo)
-```shell
-# Set a custom session root path. Default is `$HOME`.
-# Must be called before `initialize_session`.
-project="nvim-deepfail"
-tmuxifier_templates="$(eval echo ~/.tmux/plugins/tmuxifier/layouts)"
-session_root "'$(eval echo $DEV_ROOT)'/${project}/"
-# I have dev root set in .zshrc, export DEV_ROOT="~/dev/github"
-
-
-# Create session with specified name if it does not already exist.
-if initialize_session "nvim-deepfail"; then
-
-  # Create a "config" window and run commands
-  new_window "${project}"
-  
-  # Split vertically and select the first pane
-  split_v 30
-  select_pane 0
-
-  # python venv
-  # run_cmd "[ -f "env/${project}/bin/activate" ] && source env/${project}/bin/activate || mkdir -p env && python3.12 -m venv env/${project} && source env/${project}/bin/activate"
-  run_cmd "source env/${project}/bin/activate || mkdir -p env && python3.12 -m venv env/${project} && source env/${project}/bin/activate"
-  run_cmd "lvim"
-  
-  # Wait for lvim to fully load, then send <Space>e, Ctrl-l, and r
-  sleep 1  # Increase wait time if lvim takes longer to load
-  send_keys "r"
-
-  # Set up the second pane with a horizontal split and run commands in `nu`
-  select_pane 1
-  run_cmd "source env/${project}/bin/activate || mkdir -p env && python3.12 -m venv env/${project} && source env/${project}/bin/activate"
-
-  split_h 40
-  select_pane 2
-  run_cmd "nu"
-  send_keys "ls"  # Instead of `run_cmd ls` in case `ls` is a command to run in `nu`
-
-  # Set up a new "nvim-deepfail" window and run commands
-  new_window "config"
-  select_window "config"
-  select_pane 0
-  run_cmd "cd '$(eval echo $DEV_ROOT)'/ && lvim ${tmuxifier_templates}/${project}.session.sh"
-  
-  # Wait for lvim to load, then send <Space>e, Ctrl-l, and r
-  sleep 2  # Increase wait time if needed
-  send_keys " e"
-
-  # Return to "config" window and select pane 0
-  select_window "${project}"
-  select_pane 0
-
-fi
-
-# Finalize session creation and switch/attach to it.
-finalize_and_go_to_session
-```
+https://github.com/g33k5z/nvim-deepfail/blob/4ea6e3b941e14d41fd006a6983763b24528ed5b6/tmuxifier/layouts/nvim-deepfail.session.sh#L1-L52
