@@ -1,9 +1,8 @@
 -- Read the docs: https://www.lunarvim.org/docs/configuration
+-- Example configs: https://github.com/LunarVim/starter.lvim
 -- Video Tutorials: https://www.youtube.com/watch?v=sFA9kX-Ud_c&list=PLhoH5vyxr6QqGu0i7tt_XoVK9v-KvZ3m6
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
-
--- tailwind-tools.lua
 
 -- Enable relative line numbers
 vim.opt.relativenumber = true
@@ -18,6 +17,21 @@ lvim.builtin.treesitter.auto_install = true
 lvim.builtin.treesitter.ensure_installed = { "python" } --"comment", "markdown_inline", "regex" }
 
 -- -- generic LSP settings <https://www.lunarvim.org/docs/configuration/language-features/language-servers>
+
+
+local nvim_lsp = require('lspconfig')
+nvim_lsp.denols.setup {
+  on_attach = on_attach,
+  root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
+}
+
+nvim_lsp.ts_ls.setup {
+  on_attach = on_attach,
+  root_dir = nvim_lsp.util.root_pattern("package.json"),
+  single_file_support = false
+}
+
+
 
 lvim.lsp.installer.setup.ensure_installed = {
 	"pyright",
@@ -50,6 +64,23 @@ local opts = {
 require("lvim.lsp.manager").setup("html", opts)
 lvim.plugins = {
 	{
+		"christoomey/vim-tmux-navigator",
+		cmd = {
+			"TmuxNavigateLeft",
+			"TmuxNavigateDown",
+			"TmuxNavigateUp",
+			"TmuxNavigateRight",
+			"TmuxNavigatePrevious",
+		},
+		keys = {
+			{ "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+			{ "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+			{ "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+			{ "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+			{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+		},
+	},
+	{
 		"ThePrimeagen/refactoring.nvim",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
@@ -64,7 +95,7 @@ lvim.plugins = {
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			"williamboman/mason.nvim",
-			"nvimtools/none-ls.nvim", -- Make sure this is "null-ls.nvim" not "none-ls.nvim"
+			"jose-elias-alvarez/null-ls.nvim", -- Corrected from "none-ls.nvim" to "null-ls.nvim"
 		},
 		config = function()
 			require("mason-null-ls").setup({
@@ -74,21 +105,20 @@ lvim.plugins = {
 
 			local null_ls = require("null-ls")
 			null_ls.setup({
-				timeout_ms = 10000, -- Extend timeout to 10 seconds
 				sources = {
 					null_ls.builtins.formatting.stylua,
 				},
 			})
 		end,
 	},
-	{
-		"edluffy/hologram.nvim",
-		config = function()
-			require("hologram").setup({
-				auto_display = true, -- WIP automatic markdown image display
-			})
-		end,
-	},
+	-- {
+	--   "edluffy/hologram.nvim",
+	--   config = function()
+	--     require("hologram").setup({
+	--       auto_display = true, -- WIP automatic markdown image display
+	--     })
+	--   end,
+	-- },
 	{
 		"kwakzalver/duckytype.nvim",
 		config = function()
@@ -120,31 +150,6 @@ lvim.plugins = {
 			})
 		end,
 	},
-	-- {
-	--   "folke/lsp-trouble.nvim",
-	--   -- requires = "kyazdani42/nvim-web-devicons",
-	--   config = function()
-	--     require("trouble").setup {
-	--       --edluffy/hologramedluffy/hologramedluffy/hologram your configuration comes here
-	--       -- or leave it empty to use the default settings
-	--       -- refer to the configuration section below
-	--     }
-	--   end
-	-- },
-	-- {
-	--   "ellisonleao/glow.nvim",
-	--   config = function()
-	--     require("glow").setup()
-	--   end
-	-- },
-	-- You must install glow globally
-	-- https://github.com/charmbracelet/glow
-	-- yay -S glow
-	-- {
-	--   "npxbr/glow.nvim",
-	--   ft = { "markdown" }
-	--   -- build = "yay -S glow"
-	-- },
 	{
 		"ellisonleao/glow.nvim",
 		config = true,
@@ -169,13 +174,6 @@ lvim.plugins = {
 	{
 		"BurntSushi/ripgrep",
 	},
-	-- {
-	--   "zbirenbaum/copilot-cmp",
-	--   after = { "copilot.lua" },
-	--   config = function()
-	--     require("copilot_cmp").setup()
-	--   end
-	-- },
 	{
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
@@ -287,8 +285,8 @@ copilot.setup({
 	},
 })
 
-local opts = { noremap = true, silent = true }
-vim.api.nvim_set_keymap("n", "<c-s>", "<cmd>lua require('copilot.suggestion').toggle_auto_trigger()<CR>", opts)
+local opts2 = { noremap = true, silent = true }
+vim.api.nvim_set_keymap("n", "<c-s>", "<cmd>lua require('copilot.suggestion').toggle_auto_trigger()<CR>", opts2)
 
 lvim.builtin.dap.active = true
 local mason_path = vim.fn.glob(vim.fn.stdpath("data") .. "/mason/")
