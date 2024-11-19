@@ -159,9 +159,6 @@ brew install tmux
 # https://github.com/tmux/tmux/wiki/Installing
 ```
 
-#### Config
-copy `.tmux.config` to `$HOME` | `~/`
-
 https://github.com/tmux/tmux/wiki/Getting-Started#configuring-tmux
 
 #### tmux package manager
@@ -171,6 +168,12 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # https://github.com/tmux-plugins/tpm
 ```
 
+
+#### Config
+copy `.tmux.config` to `$HOME` | `~/`
+
+Once tmux is running you can press `<LEADER> + I` to install plugins defined in .tmux.conf
+tmux LEADER is defaulted to `CTRL+B`, and will be `CTRL+A` with my config
 
 #### tmuxifier
 ```shell
@@ -182,4 +185,13 @@ export PATH="$HOME/.tmuxifier/bin:$PATH"
 # https://github.com/jimeh/tmuxifier
 ```
 
+Add to .zshrc
+```shell
+export PATH="$HOME/.tmuxifier/bin:$PATH"
+eval "$(tmuxifier init -)"
 
+#used for root of tmuxifier layouts
+export DEV_ROOT="~/dev/github"
+
+# https://github.com/jimeh/tmuxifier
+```
