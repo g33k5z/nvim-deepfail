@@ -5,7 +5,7 @@ tmuxifier_templates="$(eval echo ~/.tmux/plugins/tmuxifier/layouts)"
 session_root "'$(eval echo $DEV_ROOT)'/${project}/"
 
 # Create session with specified name if it does not already exist.
-if initialize_session "nvim-deepfail"; then
+if initialize_session ${project}; then
 
   # Create a "config" window and run commands
   new_window "${project}"
