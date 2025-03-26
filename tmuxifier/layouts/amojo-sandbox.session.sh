@@ -1,11 +1,11 @@
 # Set a custom session root path. Default is `$HOME`.
 # Must be called before `initialize_session`.
-project="tracker-api"
+project="mojo-sandbox"
 tmuxifier_templates="$(eval echo ~/.tmux/plugins/tmuxifier/layouts)"
 session_root "'$(eval echo $DEV_ROOT)'/${project}/"
 
 # Create session with specified name if it does not already exist.
-if initialize_session ${project}; then
+if initialize_session project; then
 
   # Create a "config" window and run commands
   new_window "${project}"
@@ -15,6 +15,7 @@ if initialize_session ${project}; then
   select_pane 0
 
   # python venv
+  # run_cmd "[ -f "env/${project}/bin/activate" ] && source env/${project}/bin/activate || mkdir -p env && python3.12 -m venv env/${project} && source env/${project}/bin/activate"
   run_cmd "source env/${project}/bin/activate || mkdir -p env && python3.12 -m venv env/${project} && source env/${project}/bin/activate"
   run_cmd "lvim"
   
@@ -25,12 +26,11 @@ if initialize_session ${project}; then
   # Set up the second pane with a horizontal split and run commands in `nu`
   select_pane 1
   run_cmd "source env/${project}/bin/activate || mkdir -p env && python3.12 -m venv env/${project} && source env/${project}/bin/activate"
-  run_cmd "fastapi dev app/main.py"
 
   split_h 40
   select_pane 2
-  run_cmd "source env/${project}/bin/activate || mkdir -p env && python3.12 -m venv env/${project} && source env/${project}/bin/activate"
-  run_cmd "pytest"
+  run_cmd "nu"
+  send_keys "ls"  # Instead of `run_cmd ls` in case `ls` is a command to run in `nu`
 
   # Set up a new "nvim-deepfail" window and run commands
   new_window "config"
@@ -50,4 +50,3 @@ fi
 
 # Finalize session creation and switch/attach to it.
 finalize_and_go_to_session
-

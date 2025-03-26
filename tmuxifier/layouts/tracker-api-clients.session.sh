@@ -1,6 +1,6 @@
 # Set a custom session root path. Default is `$HOME`.
 # Must be called before `initialize_session`.
-project="tracker-api"
+project="tracker-api-clients"
 tmuxifier_templates="$(eval echo ~/.tmux/plugins/tmuxifier/layouts)"
 session_root "'$(eval echo $DEV_ROOT)'/${project}/"
 
@@ -30,9 +30,9 @@ if initialize_session ${project}; then
   split_h 40
   select_pane 2
   run_cmd "source env/${project}/bin/activate || mkdir -p env && python3.12 -m venv env/${project} && source env/${project}/bin/activate"
-  run_cmd "pytest"
 
-  # Set up a new "nvim-deepfail" window and run commands
+
+  # Set up a new project window and run commands
   new_window "config"
   select_window "config"
   select_pane 0
