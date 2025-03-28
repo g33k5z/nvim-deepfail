@@ -4,6 +4,41 @@
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
 
+
+
+
+-- ~/.config/lvim/config.lua
+
+-- Make sure alpha is enabled (it usually is by default)
+lvim.builtin.alpha.active = true
+
+-- Configure the dashboard header
+lvim.builtin.alpha.dashboard.section.header.val = {
+    [[            /$$$$$$   ]], -- Using Lua long strings [[...]] is often easier for ASCII art
+    [[           /$$__  $$  ]],
+    [[  /$$$$$$ | $$  \ $$  ]],
+    [[ |____  $$| $$$$$$$$  ]],
+    [[  /$$$$$$$| $$__  $$  ]],
+    [[ /$$__  $$| $$  | $$  ]],
+    [[|  $$$$$$$| $$  | $$  ]],
+    [[ \_______/|__/  |__/  ]],
+    [[                      ]], -- Optional: Add a blank line for spacing
+    [[     pay yo billz     ]], -- Optional: Add a blank line for spacing
+}
+
+-- Optional: Add color to the header (Example: Green)
+-- Place this somewhere in your config.lua, outside the lvim.builtin.alpha table
+-- Using vim.api (recommended)
+vim.api.nvim_set_hl(0, "AlphaHeader", { fg = "#A6E22E" }) -- Bright Green
+
+-- Or using vim.cmd
+-- vim.cmd("highlight AlphaHeader guifg=#A6E22E ctermfg=118") -- GUI and Terminal Green
+
+-- ... other configurations in your config.lua ...
+
+
+
+
 -- Enable relative line numbers
 vim.opt.relativenumber = true
 vim.opt.number = true -- Keep the current line number absolute
@@ -16,22 +51,26 @@ lvim.builtin.treesitter.auto_install = true
 -- -- always installed on startup, useful for parsers without a strict filetype
 lvim.builtin.treesitter.ensure_installed = { "python" } --"comment", "markdown_inline", "regex" }
 
--- -- generic LSP settings <https://www.lunarvim.org/docs/configuration/language-features/language-servers>
+-- generic LSP settings <https://www.lunarvim.org/docs/configuration/language-features/language-servers>
 
+vim.cmd([[
+  highlight Normal guibg=none
+  highlight NonText guibg=none
+  highlight Normal ctermbg=none
+  highlight NonText ctermbg=none
+]])
 
-local nvim_lsp = require('lspconfig')
-nvim_lsp.denols.setup {
-  on_attach = on_attach,
-  root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
-}
+local nvim_lsp = require("lspconfig")
+nvim_lsp.denols.setup({
+	on_attach = on_attach,
+	root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
+})
 
-nvim_lsp.ts_ls.setup {
-  on_attach = on_attach,
-  root_dir = nvim_lsp.util.root_pattern("package.json"),
-  single_file_support = false
-}
-
-
+nvim_lsp.ts_ls.setup({
+	on_attach = on_attach,
+	root_dir = nvim_lsp.util.root_pattern("package.json"),
+	single_file_support = false,
+})
 
 lvim.lsp.installer.setup.ensure_installed = {
 	"pyright",
@@ -63,6 +102,15 @@ local opts = {
 
 require("lvim.lsp.manager").setup("html", opts)
 lvim.plugins = {
+	-- {
+	-- 	"docholiday", -- plugin name
+	-- 	dir = "~/.docholiday", -- local path
+	-- 	config = function()
+	-- 		require("docstring-toggle").setup({
+	-- 			-- your config here
+	-- 		})
+	-- 	end,
+	-- },
 	{
 		"christoomey/vim-tmux-navigator",
 		cmd = {
@@ -174,6 +222,22 @@ lvim.plugins = {
 	{
 		"BurntSushi/ripgrep",
 	},
+	-- local ok, copilot = pcall(require, "copilot")
+	-- if not ok then
+	-- 	return
+	-- end
+
+	-- copilot.setup({
+	-- 	suggestion = {
+	-- 		keymap = {
+	-- 			accept = "<c-l>",
+	-- 			next = "<c-j>",
+	-- 			prev = "<c-k>",
+	-- 			dismiss = "<c-h>",
+	-- 		},
+	-- 	},
+	-- })
+
 	{
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
@@ -182,7 +246,7 @@ lvim.plugins = {
 			-- require("copilot").setup({})
 			require("copilot").setup({
 				panel = {
-					enabled = true,
+					enabled = false,
 					auto_refresh = true,
 					keymap = {
 						jump_prev = "[[",
@@ -202,12 +266,12 @@ lvim.plugins = {
 					hide_during_completion = true,
 					debounce = 75,
 					keymap = {
-						accept = "<M-l>",
+						accept = "<C-l>",
 						accept_word = false,
 						accept_line = false,
-						next = "<M-]>",
-						prev = "<M-[>",
-						dismiss = "<C-]>",
+						next = "<C-j>",
+						prev = "<C-k>",
+						dismiss = "<C-h>",
 					},
 				},
 				filetypes = {
@@ -220,6 +284,9 @@ lvim.plugins = {
 					svn = false,
 					cvs = false,
 					["."] = false,
+					python = true,
+					golang = true,
+					[".mojo"] = true,
 				},
 				copilot_node_command = "node", -- Node.js version must be > 18.x
 				server_opts_overrides = {},
@@ -268,22 +335,6 @@ lvim.plugins = {
 	"nvim-neotest/neotest",
 	"nvim-neotest/neotest-python",
 }
-
-local ok, copilot = pcall(require, "copilot")
-if not ok then
-	return
-end
-
-copilot.setup({
-	suggestion = {
-		keymap = {
-			accept = "<c-l>",
-			next = "<c-j>",
-			prev = "<c-k>",
-			dismiss = "<c-h>",
-		},
-	},
-})
 
 local opts2 = { noremap = true, silent = true }
 vim.api.nvim_set_keymap("n", "<c-s>", "<cmd>lua require('copilot.suggestion').toggle_auto_trigger()<CR>", opts2)
