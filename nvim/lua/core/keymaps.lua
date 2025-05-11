@@ -42,8 +42,8 @@ keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 -- Clear highlights
 keymap("n", "<leader>h", "<cmd>nohlsearch<CR>", opts)
 
--- Close buffers
-keymap("n", "<S-q>", "<cmd>Bdelete!<CR>", opts)
+-- Close buffers and auto-select next buffer
+keymap("n", "<S-q>", "<cmd>bp | bd #<CR>", opts)
 
 -- Better paste
 keymap("v", "p", '"_dP', opts)

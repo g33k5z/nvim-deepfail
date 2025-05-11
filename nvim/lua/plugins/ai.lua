@@ -36,18 +36,19 @@ return {
           },
         },
         filetypes = {
-          yaml = false,
-          markdown = false,
-          help = false,
-          gitcommit = false,
-          gitrebase = false,
-          hgcommit = false,
-          svn = false,
-          cvs = false,
-          ["."] = false,
-          python = true,
-          golang = true,
-          [".mojo"] = true,
+          -- yaml = false,
+          -- markdown = false,
+          -- help = false,
+          -- gitcommit = false,
+          -- gitrebase = false,
+          -- hgcommit = false,
+          -- svn = false,
+          -- cvs = false,
+          -- ["."] = false,
+          -- python = true,
+          -- golang = true,
+          -- [".mojo"] = true,
+          ["*"] = true, -- Enable Copilot for all filetypes
         },
         copilot_node_command = "node", -- Node.js version must be > 18.x
         server_opts_overrides = {},
@@ -62,7 +63,7 @@ return {
     config = function()
       require("chatgpt").setup({
         openai_params = {
-          model = "gpt-4o",
+          model = "gpt-4.1",
           frequency_penalty = 0,
           presence_penalty = 0,
           max_tokens = 4000,

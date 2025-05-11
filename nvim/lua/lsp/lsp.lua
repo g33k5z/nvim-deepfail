@@ -1,17 +1,13 @@
 return {
 	-- LSP Configuration & Plugins
 	{
-		"mason-org/mason.nvim",
-		"mason-org/mason-lspconfig.nvim",
-		"neovim/nvim-lspconfig",
-	},
-	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			-- Automatically install LSPs to stdpath for neovim
-			{ "mason-org/mason.nvim", config = true },
+			-- { "mason-org/mason.nvim", config = true },
+			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
-
+      
 			-- Useful status updates for LSP
 			{
 				"j-hui/fidget.nvim",
@@ -23,149 +19,139 @@ return {
 			"folke/neodev.nvim",
 		},
 		config = function()
-			-- Setup neodev for better Lua development
-			require("neodev").setup()
+      -- Setup neodev for better Lua development
+      require("neodev").setup()
 
-			local lspconfig = require("lspconfig")
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      local lspconfig = require("lspconfig")
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-			-- Define on_attach function for keymaps and other LSP customizations
-			local on_attach = function(client, bufnr)
-				local nmap = function(keys, func, desc)
-					if desc then
-						desc = "LSP: " .. desc
-					end
-					vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
-				end
+      -- Define on_attach function for keymaps and other LSP customizations
+      local on_attach = function(client, bufnr)
+        local nmap = function(keys, func, desc)
+          if desc then
+            desc = "LSP: " .. desc
+          end
+          vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
+        end
 
-				nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-				nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
-				nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
-				nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
-				nmap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
-				nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
-				nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-				nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
-				nmap("K", vim.lsp.buf.hover, "Hover Documentation")
-				nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
+        nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
+        nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+        nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
+        nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
+        nmap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+        nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
+        nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
+        nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+        nmap("K", vim.lsp.buf.hover, "Hover Documentation")
+        nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
 
-				-- Create a command `:Format` local to the LSP buffer
-				vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-					vim.lsp.buf.format()
-				end, { desc = "Format current buffer with LSP" })
-			end
+        -- Create a command `:Format` local to the LSP buffer
+        vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
+          vim.lsp.buf.format()
+        end, { desc = "Format current buffer with LSP" })
+      end
 
-			-- Mason & Mason-lspconfig setup
-			require("mason").setup({
-				ui = {
-					icons = {
-						package_installed = "✓",
-						package_pending = "➜",
-						package_uninstalled = "✗",
-					},
-				},
-				max_concurrent_installers = 4,
-				log_level = vim.log.levels.INFO,
-				-- Simplified configuration to avoid registry issues
-				registries = {},
-			})
+      -- Mason & Mason-lspconfig setup
+      require("mason").setup({
+        ui = {
+          icons = {
+            package_installed = "✓",
+            package_pending = "➜",
+            package_uninstalled = "✗",
+          },
+        },
+        max_concurrent_installers = 4,
+        log_level = vim.log.levels.INFO,
+        -- Simplified configuration to avoid registry issues
+        -- registries = {},
+      })
 
-			require("mason-lspconfig").setup({
-				ensure_installed = {
-					"pyright",
-					"ruff",
-					"lua_ls",
-					"html",
-					"ts_ls",
-					"denols",
-				},
-				handlers = {
-					function(server_name)
-						lspconfig[server_name].setup({
-							capabilities = capabilities,
-							on_attach = on_attach,
-						})
-					end,
+      -- require("mason-lspconfig").setup{}
+        -- ensure_installed = {
+        --   "pyright",
+        --   "ruff",
+        --   "lua_ls",
+        --   "html",
+        --   "ts_ls",
+        -- },
+        -- handlers = {
+          -- function(server_name)
+          --   lspconfig[server_name].setup({
+          --     capabilities = capabilities,
+          --     on_attach = on_attach,
+          --   })
+          -- end,
 
-					-- Override handlers for specific servers
-					["lua_ls"] = function()
-						lspconfig.lua_ls.setup({
-							capabilities = capabilities,
-							on_attach = on_attach,
-							settings = {
-								Lua = {
-									diagnostics = { globals = { "vim" } },
-									workspace = {
-										library = {
-											[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-											[vim.fn.stdpath("config") .. "/lua"] = true,
-										},
-									},
-									telemetry = { enable = false },
-								},
-							},
-						})
-					end,
+          -- Override handlers for specific servers
+          -- ["lua_ls"] = function() lspconfig.lua_ls.setup({
+          --     capabilities = capabilities,
+          --     on_attach = on_attach,
+          --     settings = {
+          --       Lua = {
+          --         diagnostics = { globals = { "vim" } },
+          --         workspace = {
+          --           library = {
+          --             [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+          --             [vim.fn.stdpath("config") .. "/lua"] = true,
+          --           },
+          --         },
+          --         telemetry = { enable = false },
+          --       },
+          --     },
+          --   })
+          -- end,
 
-					-- ["ts_ls"] = function()
-					-- 	lspconfig.ts_ls.setup({
-					-- 		capabilities = capabilities,
-					-- 		on_attach = on_attach,
-					-- 		-- any specific options for typescript-tools here
-					-- 	})
-					-- end,
-					["tsserver"] = function()
-						lspconfig.tsserver.setup({
-							capabilities = capabilities,
-							on_attach = on_attach,
-							root_dir = lspconfig.util.root_pattern("package.json"),
-							single_file_support = false,
-						})
-					end,
-					["denols"] = function()
-						lspconfig.denols.setup({
-							on_attach = on_attach,
-							capabilities = capabilities,
-							root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
-						})
-					end,
+          -- ["ts_ls"] = function()
+          -- 	lspconfig.ts_ls.setup({
+          -- 		capabilities = capabilities,
+          -- 		on_attach = on_attach,
+          -- 		-- any specific options for typescript-tools here
+          -- 	})
+          -- end,
+          -- ["tsserver"] = function()
+          --   lspconfig.tsserver.setup({
+          --     capabilities = capabilities,
+          --     on_attach = on_attach,
+          --     root_dir = lspconfig.util.root_pattern("package.json"),
+          --     single_file_support = false,
+          --   })
+          -- end,
+          -- ["html"] = function()
+          --   lspconfig.html.setup({
+          --     capabilities = capabilities,
+          --     on_attach = on_attach,
+          --     filetypes = { "html", "htmldjango" },
+          --   })
+          -- end,
+        -- },
+      -- })
 
-					["html"] = function()
-						lspconfig.html.setup({
-							capabilities = capabilities,
-							on_attach = on_attach,
-							filetypes = { "html", "htmldjango" },
-						})
-					end,
-				},
-			})
+      -- Language servers are now configured through mason-lspconfig handlers above
 
-			-- Language servers are now configured through mason-lspconfig handlers above
+      -- Diagnostics configuration
+      vim.diagnostic.config({
+        virtual_text = true,
+        signs = true,
+        update_in_insert = false,
+        underline = true,
+        severity_sort = true,
+        float = {
+          focusable = false,
+          style = "minimal",
+          border = "rounded",
+          source = "always",
+          header = "",
+          prefix = "",
+        },
+      })
 
-			-- Diagnostics configuration
-			vim.diagnostic.config({
-				virtual_text = true,
-				signs = true,
-				update_in_insert = false,
-				underline = true,
-				severity_sort = true,
-				float = {
-					focusable = false,
-					style = "minimal",
-					border = "rounded",
-					source = "always",
-					header = "",
-					prefix = "",
-				},
-			})
-
-			-- Diagnostic signs
-			local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-			for type, icon in pairs(signs) do
-				local hl = "DiagnosticSign" .. type
-				vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-			end
-		end,
+      -- Diagnostic signs
+      local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+      for type, icon in pairs(signs) do
+        local hl = "DiagnosticSign" .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+      end
+    end,
 	},
 
 	-- Autocompletion
@@ -244,7 +230,7 @@ return {
 		"jay-babu/mason-null-ls.nvim",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
-			"mason-org/mason.nvim",
+			"williamboman/mason.nvim",
 			"nvimtools/none-ls.nvim",
 		},
 		config = function()
