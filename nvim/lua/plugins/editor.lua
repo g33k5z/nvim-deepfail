@@ -9,6 +9,8 @@ return {
 
 			-- Configure the dashboard header (migrated from LunarVIM)
 			dashboard.section.header.val = {
+        [[                      ]],
+        [[                      ]],
 				[[            /$$$$$$   ]],
 				[[           /$$__  $$  ]],
 				[[  /$$$$$$ | $$  \ $$  ]],
@@ -24,7 +26,8 @@ return {
 			-- Configure dashboard buttons
 			dashboard.section.buttons.val = {
 				dashboard.button("f", "  Find file", ":Telescope find_files <CR>"),
-				dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
+        dashboard.button("e", "  Explore", ":NvimTreeToggle <CR>"),
+				--dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
 				dashboard.button("r", "  Recently used files", ":Telescope oldfiles <CR>"),
 				dashboard.button("t", "  Find text", ":Telescope live_grep <CR>"),
 				dashboard.button("c", "  Configuration", ":e $MYVIMRC <CR>"),
@@ -143,28 +146,28 @@ return {
 			local harpoon = require("harpoon")
 			harpoon:setup({})
 
-			-- Basic keymaps for harpoon
-			vim.keymap.set("n", "<leader>a", function()
-				harpoon:list():append()
-			end)
-			vim.keymap.set("n", "<C-e>", function()
-				harpoon.ui:toggle_quick_menu(harpoon:list())
-			end)
-
-			-- Nav keymaps
-			vim.keymap.set("n", "<leader>1", function()
-				harpoon:list():select(1)
-			end)
-			vim.keymap.set("n", "<leader>2", function()
-				harpoon:list():select(2)
-			end)
-			vim.keymap.set("n", "<leader>3", function()
-				harpoon:list():select(3)
-			end)
-			vim.keymap.set("n", "<leader>4", function()
-				harpoon:list():select(4)
-			end)
-
+			-- -- Basic keymaps for harpoon
+			-- vim.keymap.set("n", "<leader>a", function()
+			-- 	harpoon:list():add()
+			-- end)
+			-- vim.keymap.set("n", "<C-e>", function()
+			-- 	harpoon.ui:toggle_quick_menu(harpoon:list())
+			-- end)
+			--
+			-- -- Nav keymaps
+			-- vim.keymap.set("n", "<leader>1", function()
+			-- 	harpoon:list():select(1)
+			-- end)
+			-- vim.keymap.set("n", "<leader>2", function()
+			-- 	harpoon:list():select(2)
+			-- end)
+			-- vim.keymap.set("n", "<leader>3", function()
+			-- 	harpoon:list():select(3)
+			-- end)
+			-- vim.keymap.set("n", "<leader>4", function()
+			-- 	harpoon:list():select(4)
+			-- end)
+			--
 			-- Telescope integration
 			local conf = require("telescope.config").values
 			local function toggle_telescope(harpoon_files)
@@ -203,21 +206,21 @@ return {
 			})
 
 			-- Keymaps
-			vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>", { silent = true, noremap = true })
-			vim.keymap.set(
-				"n",
-				"<leader>xw",
-				"<cmd>TroubleToggle workspace_diagnostics<cr>",
-				{ silent = true, noremap = true }
-			)
-			vim.keymap.set(
-				"n",
-				"<leader>xd",
-				"<cmd>TroubleToggle document_diagnostics<cr>",
-				{ silent = true, noremap = true }
-			)
-			vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>", { silent = true, noremap = true })
-			vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", { silent = true, noremap = true })
+			-- vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>", { silent = true, noremap = true })
+			-- vim.keymap.set(
+			-- 	"n",
+			-- 	"<leader>xw",
+			-- 	"<cmd>TroubleToggle workspace_diagnostics<cr>",
+			-- 	{ silent = true, noremap = true }
+			-- )
+			-- vim.keymap.set(
+			-- 	"n",
+			-- 	"<leader>xd",
+			-- 	"<cmd>TroubleToggle document_diagnostics<cr>",
+			-- 	{ silent = true, noremap = true }
+			-- )
+			-- vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>", { silent = true, noremap = true })
+			-- vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", { silent = true, noremap = true })
 		end,
 	},
 
