@@ -23,7 +23,7 @@ return {
 		"<leader>/",
 		"<Plug>(comment_toggle_linewise_visual)",
 		desc = "Comment toggle",
-		mode = { "n", "v" },
+		mode = { "v" },
 	},
 }
 

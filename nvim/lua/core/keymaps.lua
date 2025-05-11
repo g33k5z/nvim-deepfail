@@ -50,3 +50,12 @@ keymap("v", "p", '"_dP', opts)
 
 -- Copilot toggle
 keymap("n", "<C-s>", "<cmd>lua require('copilot.suggestion').toggle_auto_trigger()<CR>", opts)
+
+-- Go to definition
+keymap('n', 'gd', vim.lsp.buf.definition, opts)
+
+-- Go to references (using Telescope for a nice UI, or use vim.lsp.buf.references for default)
+keymap('n', 'gr', "<cmd>Telescope lsp_references<CR>", opts)
+
+-- Show hover documentation
+keymap('n', 'K', vim.lsp.buf.hover, opts)
