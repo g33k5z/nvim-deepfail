@@ -1,3 +1,4 @@
+
 # Handrolled Neovim Configuration
 
 This is a handrolled Neovim configuration migrated from LunarVIM, focusing on maintaining the same functionality while providing more control and customization.
