@@ -16,10 +16,10 @@ if initialize_session ${project}; then
 
   # python venv
   run_cmd "source env/${project}/bin/activate || mkdir -p env && python3.12 -m venv env/${project} && source env/${project}/bin/activate"
-  run_cmd "lvim"
+  run_cmd "nvim"
   
-  # Wait for lvim to fully load, then send <Space>e, Ctrl-l, and r
-  sleep 1  # Increase wait time if lvim takes longer to load
+  # Wait for nvim to fully load, then send <Space>e, Ctrl-l, and r
+  sleep 1  # Increase wait time if nvim takes longer to load
   send_keys "r"
 
   # Set up the second pane with a horizontal split and run commands in `nu`
@@ -35,9 +35,9 @@ if initialize_session ${project}; then
   new_window "config"
   select_window "config"
   select_pane 0
-  run_cmd "cd '$(eval echo $DEV_ROOT)'/ && lvim ${tmuxifier_templates}/${project}.session.sh"
+  run_cmd "cd '$(eval echo $DEV_ROOT)'/ && nvim ${tmuxifier_templates}/${project}.session.sh"
   
-  # Wait for lvim to load, then send <Space>e, Ctrl-l, and r
+  # Wait for nvim to load, then send <Space>e, Ctrl-l, and r
   sleep 2  # Increase wait time if needed
   send_keys " e"
 
