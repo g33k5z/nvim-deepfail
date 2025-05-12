@@ -3,6 +3,7 @@ local api = vim.api
 
 -- Set custom highlight for dashboard header (from LunarVIM config)
 api.nvim_set_hl(0, "AlphaHeader", { fg = "#A6E22E" }) -- Bright Green
+-- api.nvim_set_hl(0, "AlphaHeader", { fg = "#ff00ff" }) -- Magenta
 
 -- Transparent background
 vim.cmd([[

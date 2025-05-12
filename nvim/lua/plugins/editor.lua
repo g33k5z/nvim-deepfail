@@ -2,10 +2,18 @@ return {
   -- Alpha (dashboard)
   {
     "goolord/alpha-nvim",
+    dependencies = {
+      'echasnovski/mini.icons',
+      'nvim-lua/plenary.nvim',
+      "nvim-tree/nvim-web-devicons",
+    },
     event = "VimEnter",
     config = function()
       local alpha = require("alpha")
       local dashboard = require("alpha.themes.dashboard")
+
+      -- Set the header color
+      dashboard.section.header.opts.hl = "AlphaHeader"
 
       -- Configure the dashboard header (migrated from LunarVIM)
       dashboard.section.header.val = {
@@ -36,7 +44,6 @@ return {
 
       alpha.setup(dashboard.opts)
     end,
-    dependencies = { "nvim-tree/nvim-web-devicons" },
   },
 
   -- Telescope (fuzzy finder)
