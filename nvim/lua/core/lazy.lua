@@ -18,8 +18,6 @@ require("lazy").setup({
   { import = "plugins" },
   -- Load all plugin specs from lua/keymap/ directory
   { import = "keymap" },
-  -- Load all plugin specs from lua/lsp/ directory
-  { import = "lsp" },
 }, {
   install = {
     colorscheme = { "tokyonight" },

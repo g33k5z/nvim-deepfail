@@ -1,0 +1,6 @@
+{
+  // Add "vim" as a recognized global
+  "Lua.diagnostics.globals": [
+    "vim"
+  ]
+}
