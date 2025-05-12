@@ -34,20 +34,19 @@
 
     That symlink output:
 
-    ```
+    ```sh
     lrwxr-xr-x g33k5z staff  44 B  Mon May 12 15:27:03 2025  nvim ⇒ /Users/g33k5z/.config/nvim-deepfail-git/nvim
     ```
 
-    means your setup is **exactly correct**:
+    - means your setup is **exactly correct**:
+        - `~/.config/nvim` is a symlink to your Git-controlled folder.
+        - Neovim will read your config with no issues.
+        - Updating the git repo (in `nvim-deepfail-git`) will instantly update your live Neovim config.
 
-    - `~/.config/nvim` is a symlink to your Git-controlled folder.
-    - Neovim will read your config with no issues.
-    - Updating the git repo (in `nvim-deepfail-git`) will instantly update your live Neovim config.
-
-    You have the **best of both worlds:**  
-    - Clean config folder not cluttered with `.git`
-    - Easy `git pull/push` for updates/sharing
-    - Works perfectly with your SSH GitHub account(s)
+    - You have the **best of both worlds:**  
+        - Clean config folder not cluttered with `.git`
+        - Easy `git pull/push` for updates/sharing
+        - Works perfectly with your SSH GitHub account(s)
 
 
     - Now `~/.config/nvim` always points to the up-to-date sparse-checked-out git working directory.
@@ -78,5 +77,3 @@ You will **never** make `~/.config/` itself a Git repo, so the rest of your conf
 
 If you ever want to change configs, test a new setup, or roll back, just swap the symlink—**it’s super flexible**.
 
-If you need a one-liner or alias for updating, or tips for managing multiple configs, just ask!  
-Happy hacking with Neovim 🚀
