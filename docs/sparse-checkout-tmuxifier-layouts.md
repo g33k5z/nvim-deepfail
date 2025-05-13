@@ -3,7 +3,7 @@
 ## 1. Clone the Repo (do only once)
 
 ```sh
-git clone --filter=blob:none --no-checkout https://github.com/g33k5z/nvim-deepfail.git ~/.tmuxifier-deepfail-git
+git clone --filter=blob:none --no-checkout https://github.com/g33k5z/nvim-deepfail.git ~/.tmux/plugins/tmuxifier/.tmuxifier-deepfail-git
 cd ~/.tmuxifier-deepfail-git
 ```
 
@@ -43,7 +43,7 @@ This keeps your layouts always up-to-date whenever you do a `git pull`.
 rm -rf ~/.tmux/plugins/tmuxifier/layouts
 
 # Use a symlink so Tmuxifier instantly sees the latest layouts from your Git working directory
-ln -sfn ~/.tmuxifier-deepfail-git/tmuxifier/layouts ~/.tmux/plugins/tmuxifier/layouts
+ln -sfn ~/.tmux/plugins/tmuxifier/.tmuxifier-deepfail-git/tmuxifier/layouts ~/.tmux/plugins/tmuxifier/layouts
 ```
 
 - After running `ls -l ~/.tmux/plugins/tmuxifier/layouts` you should see something like:
