@@ -77,7 +77,7 @@ null_ls.setup({
   sources = {
     -- Python
     null_ls.builtins.formatting.black,
-    null_ls.builtins.diagnostics.ruff,
+    -- null_ls.builtins.diagnostics.ruff,
     -- Lua
     null_ls.builtins.formatting.stylua,
     -- TypeScript/HTML
