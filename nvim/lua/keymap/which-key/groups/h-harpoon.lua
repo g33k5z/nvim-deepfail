@@ -9,13 +9,17 @@ local function get_harpoon_desc(idx)
 end
 
 return {
-  { "<leader>h", group = "Harpoon" },
+  { "<leader>h",  group = "Harpoon" },
 
-  { "<leader>ha", "<cmd>lua require('harpoon'):list():append()<CR>", desc = "Add File" },
+  { "<leader>ha", "<cmd>lua require('harpoon'):list():add()<CR>",                                    desc = "Add File" },
   { "<leader>hm", "<cmd>lua require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())<CR>", desc = "Menu" },
 
-  { "<leader>h1", "<cmd>lua require('harpoon'):list():select(1)<CR>", desc = function() return get_harpoon_desc(1) end },
-  { "<leader>h2", "<cmd>lua require('harpoon'):list():select(2)<CR>", desc = function() return get_harpoon_desc(2) end },
-  { "<leader>h3", "<cmd>lua require('harpoon'):list():select(3)<CR>", desc = function() return get_harpoon_desc(3) end },
-  { "<leader>h4", "<cmd>lua require('harpoon'):list():select(4)<CR>", desc = function() return get_harpoon_desc(4) end },
+  { "<leader>h1", "<cmd>lua require('harpoon'):list():select(1)<CR>",                                desc = function() return
+    get_harpoon_desc(1) end },
+  { "<leader>h2", "<cmd>lua require('harpoon'):list():select(2)<CR>",                                desc = function() return
+    get_harpoon_desc(2) end },
+  { "<leader>h3", "<cmd>lua require('harpoon'):list():select(3)<CR>",                                desc = function() return
+    get_harpoon_desc(3) end },
+  { "<leader>h4", "<cmd>lua require('harpoon'):list():select(4)<CR>",                                desc = function() return
+    get_harpoon_desc(4) end },
 }
