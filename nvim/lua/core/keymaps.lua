@@ -58,4 +58,15 @@ keymap('n', 'gd', vim.lsp.buf.definition, opts)
 keymap('n', 'gr', "<cmd>Telescope lsp_references<CR>", opts)
 
 -- Show hover documentation
-keymap('n', 'K', vim.lsp.buf.hover, opts)
+keymap('n', 'K', function()
+  vim.lsp.buf.hover(nil, {
+    scope = "cursor",
+    border = "rounded",
+    focusable = true,
+  })
+end, { desc = "Show diagnostic under cursor" })
+
+-- Show diagnostic message
+keymap('n', 'gl', function()
+  vim.diagnostic.open_float(nil, { scope = "cursor", border = "rounded", focusable = true })
+end, { desc = "Show diagnostic under cursor" })
