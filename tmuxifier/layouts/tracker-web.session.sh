@@ -1,6 +1,6 @@
 # Set a custom session root path. Default is `$HOME`.
 # Must be called before `initialize_session`.
-project="hack_claude_do_shit_fuck_humans"
+project="tracker-web"
 tmuxifier_templates="$(eval echo ~/.tmux/plugins/tmuxifier/layouts)"
 session_root "'$(eval echo $DEV_ROOT)'/${project}/"
 
@@ -28,6 +28,8 @@ if initialize_session ${project}; then
 
   split_h 40
   select_pane 2
+  run_cmd "cd tracker-auth-test"
+  run_cmd "npm run dev"
 
   # Set up a new "nvim-deepfail" window and run commands
   new_window "config"
