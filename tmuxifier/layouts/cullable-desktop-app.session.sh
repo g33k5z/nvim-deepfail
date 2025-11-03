@@ -15,7 +15,7 @@ if initialize_session ${project}; then
   select_pane 0
 
   # python venv
-  run_cmd "source env/${project}/bin/activate || mkdir -p env && python3.12 -m venv env/${project} && source env/${project}/bin/activate"
+  # run_cmd "source env/${project}/bin/activate || mkdir -p env && python3.12 -m venv env/${project} && source env/${project}/bin/activate"
   run_cmd "lvim"
   
   # Wait for nvim to fully load, then send <Space>e, Ctrl-l, and r
@@ -24,11 +24,10 @@ if initialize_session ${project}; then
 
   # Set up the second pane with a horizontal split and run commands in `nu`
   select_pane 1
-  run_cmd "source env/${project}/bin/activate || mkdir -p env && python3.12 -m venv env/${project} && source env/${project}/bin/activate"
+  # run_cmd "source env/${project}/bin/activate || mkdir -p env && python3.12 -m venv env/${project} && source env/${project}/bin/activate"
 
   split_h 40
   select_pane 2
-  run_cmd "cd tracker-auth-test"
   run_cmd "npm run dev"
 
   # Set up a new "nvim-deepfail" window and run commands
