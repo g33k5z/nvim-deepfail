@@ -1,5 +1,6 @@
 # Set a custom session root path. Default is `$HOME`.
-project="tracker-web"
+# Must be called before `initialize_session`.
+project="caser"
 tmuxifier_templates="$(eval echo ~/.tmux/plugins/tmuxifier/layouts)"
 session_root "'$(eval echo $DEV_ROOT)'/${project}/"
 
@@ -14,6 +15,7 @@ if initialize_session ${project}; then
   select_pane 0
 
   # python venv
+  # run_cmd "[ -f "env/${project}/bin/activate" ] && source env/${project}/bin/activate || mkdir -p env && python3.12 -m venv env/${project} && source env/${project}/bin/activate"
   run_cmd "source env/${project}/bin/activate || mkdir -p env && python3.12 -m venv env/${project} && source env/${project}/bin/activate"
   run_cmd "nvim"
   
@@ -27,8 +29,8 @@ if initialize_session ${project}; then
 
   split_h 40
   select_pane 2
-  run_cmd "cd tracker-auth-test"
-  run_cmd "npm run dev"
+  run_cmd "nu"
+  send_keys "ls"  # Instead of `run_cmd ls` in case `ls` is a command to run in `nu`
 
   # Set up a new "nvim-deepfail" window and run commands
   new_window "config"
@@ -48,4 +50,3 @@ fi
 
 # Finalize session creation and switch/attach to it.
 finalize_and_go_to_session
-
