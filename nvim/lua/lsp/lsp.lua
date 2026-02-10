@@ -21,54 +21,56 @@ require("mason-null-ls").setup({
 })
 
 -- 2. LSPCONFIG setups
-local lspconfig = require("lspconfig")
-
--- Use helper to restrict denols/tsserver to the right projects.
-local util = require("lspconfig.util")
+-- Use the new vim.lsp.config (Neovim 0.11+) instead of require('lspconfig')
+-- See :help lspconfig-nvim-0.11
 
 -- Python: Pyright (type checker, language features)
-lspconfig.pyright.setup({})
+vim.lsp.config.pyright = {}
 
 -- Python: Ruff (LSP "ruff_lsp") for diagnostics/code actions
-lspconfig.ruff.setup({
+vim.lsp.config.ruff = {
   on_attach = function(client, bufnr)
     client.server_capabilities.documentSymbolProvider = false
     -- If you have your own on_attach logic, also include that
   end,
-})
+}
 
 -- TypeScript (NOT in deno projects)
-lspconfig.ts_ls.setup {
+vim.lsp.config.ts_ls = {
   root_dir = function(fname)
     -- Prefer tsserver unless a deno.json in root!
-    if util.root_pattern("deno.json", "deno.jsonc")(fname) then
+    if vim.fs.root(fname, { "deno.json", "deno.jsonc" }) then
       return nil
     end
-    return util.root_pattern("package.json", "tsconfig.json", ".git")(fname)
+    return vim.fs.root(fname, { "package.json", "tsconfig.json", ".git" })
   end,
 }
 
 -- Deno
-lspconfig.denols.setup {
-  root_dir = util.root_pattern("deno.json", "deno.jsonc"),
-  -- You may want to add single file support logic if you work with both ecosystems.
+vim.lsp.config.denols = {
+  root_dir = function(fname)
+    return vim.fs.root(fname, { "deno.json", "deno.jsonc" })
+  end,
 }
 
 -- HTML (add "htmldjango" if you want it recognized as HTML)
-lspconfig.html.setup({
+vim.lsp.config.html = {
   filetypes = { "html", "htmldjango" },
-})
+}
 
 -- Lua: lua_ls
-lspconfig.lua_ls.setup {
+vim.lsp.config.lua_ls = {
   settings = {
     Lua = {
       diagnostics = {
         globals = { "vim" }, -- Avoid "vim" undefined warning in your Neovim config
       },
-    }
-  }
+    },
+  },
 }
+
+-- Start servers
+vim.lsp.enable({ "pyright", "ruff", "ts_ls", "denols", "html", "lua_ls" })
 
 -- 3. None-LS (null-ls): Formatters/Linters setup
 local null_ls = require("null-ls")
