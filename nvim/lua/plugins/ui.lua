@@ -52,7 +52,7 @@ return {
 			require("lualine").setup({
 				options = {
 					icons_enabled = true,
-					theme = "tokyonight",
+					theme = "palenight", --tokyonight
 					component_separators = { left = "", right = "" },
 					section_separators = { left = "", right = "" },
 					disabled_filetypes = {
@@ -73,7 +73,7 @@ return {
 								local buf_ft = vim.api.nvim_get_option_value("filetype", { buf = 0 })
 								local clients = vim.lsp.get_clients({ bufnr = 0 })
 								if next(clients) == nil then
-									return "No Active LSP"
+									return "" --"No Active LSP"
 								end
 								local client_names = {}
 								for _, client in ipairs(clients) do
@@ -87,7 +87,7 @@ return {
 								return "[" .. table.concat(client_names, ", ") .. "]"
 							end,
 							-- icon = " ",
-							color = { fg = "#7aa2f7", gui = "bold" },
+							color = { fg = "#7aa2f7" }, --, gui = "bold"
 						},
 						{
 							"copilot",
@@ -99,7 +99,7 @@ return {
 										sleep = " ", -- auto-trigger disabled
 										disabled = " ",
 										warning = " ",
-										unknown = " ",
+										unknown = "", --" ",
 									},
 									hl = {
 										enabled = "#50FA7B",
