@@ -11,6 +11,7 @@ require("mason-lspconfig").setup({
     "denols",
     "html",
     "lua_ls",
+    "tailwindcss",
   }
 })
 
@@ -58,6 +59,17 @@ vim.lsp.config('html', {
   filetypes = { "html", "htmldjango" },
 })
 
+-- Tailwind CSS: tailwindcss
+vim.lsp.config('tailwindcss', {
+  capabilities = {
+    textDocument = {
+      colorProvider = {
+        dynamicRegistration = true,
+      },
+    },
+  },
+})
+
 -- Lua: lua_ls
 vim.lsp.config('lua_ls', {
   settings = {
@@ -70,7 +82,7 @@ vim.lsp.config('lua_ls', {
 })
 
 -- Start servers
-vim.lsp.enable({ "pyright", "ruff", "ts_ls", "denols", "html", "lua_ls" })
+vim.lsp.enable({ "pyright", "ruff", "ts_ls", "denols", "html", "lua_ls", "tailwindcss" })
 
 -- 3. None-LS (null-ls): Formatters/Linters setup
 local null_ls = require("null-ls")
