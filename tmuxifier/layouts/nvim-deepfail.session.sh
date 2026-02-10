@@ -35,6 +35,8 @@ if initialize_session ${project}; then
   # Set up a new "nvim-deepfail" window and run commands
   new_window "config"
   select_window "config"
+  
+  split_v 30
   select_pane 0
   run_cmd "cd '$(eval echo $DEV_ROOT)'/ && nvim ${tmuxifier_templates}/${project}.session.sh"
   

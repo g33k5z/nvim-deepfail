@@ -25,17 +25,33 @@ if initialize_session ${project}; then
   # Set up the second pane with a horizontal split and run commands in `nu`
   select_pane 1
   run_cmd "source env/${project}/bin/activate || mkdir -p env && python3.12 -m venv env/${project} && source env/${project}/bin/activate"
+  run_cmd "opencode"
 
   split_h 40
   select_pane 2
-  run_cmd "cd tracker-auth-test"
-  run_cmd "npm run dev"
+  # "dev:web": "cd packages/tracker-web && npm run dev",
+  run_cmd "npm run dev:web"
+
+  split_v 40
+  select_pane 3
+  #  "dev:api": "cd packages/tracker-api && poetry run fastapi dev app/main.py",
+  run_cmd "source env/${project}/bin/activate || mkdir -p env && python3.12 -m venv env/${project} && source env/${project}/bin/activate"
+  run_cmd "npm run dev:api"
+
+  split_v 40
+  select_pane 4
+  #  "dev:analytics": "cd packages/pids-analytics && npm run dev",
+  run_cmd "npm run dev:analytics"
+
 
   # Set up a new "nvim-deepfail" window and run commands
   new_window "config"
   select_window "config"
   select_pane 0
   run_cmd "cd '$(eval echo $DEV_ROOT)'/ && nvim ${tmuxifier_templates}/${project}.session.sh"
+
+  split_v 30
+  split_h 40
   
   # Wait for nvim to load, then send <Space>e, Ctrl-l, and r
   sleep 2  # Increase wait time if needed
