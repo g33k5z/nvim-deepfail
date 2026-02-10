@@ -25,18 +25,18 @@ require("mason-null-ls").setup({
 -- See :help lspconfig-nvim-0.11
 
 -- Python: Pyright (type checker, language features)
-vim.lsp.config.pyright = {}
+vim.lsp.config('pyright', {})
 
 -- Python: Ruff (LSP "ruff_lsp") for diagnostics/code actions
-vim.lsp.config.ruff = {
+vim.lsp.config('ruff', {
   on_attach = function(client, bufnr)
     client.server_capabilities.documentSymbolProvider = false
     -- If you have your own on_attach logic, also include that
   end,
-}
+})
 
 -- TypeScript (NOT in deno projects)
-vim.lsp.config.ts_ls = {
+vim.lsp.config('ts_ls', {
   root_dir = function(fname)
     -- Prefer tsserver unless a deno.json in root!
     if vim.fs.root(fname, { "deno.json", "deno.jsonc" }) then
@@ -44,22 +44,22 @@ vim.lsp.config.ts_ls = {
     end
     return vim.fs.root(fname, { "package.json", "tsconfig.json", ".git" })
   end,
-}
+})
 
 -- Deno
-vim.lsp.config.denols = {
+vim.lsp.config('denols', {
   root_dir = function(fname)
     return vim.fs.root(fname, { "deno.json", "deno.jsonc" })
   end,
-}
+})
 
 -- HTML (add "htmldjango" if you want it recognized as HTML)
-vim.lsp.config.html = {
+vim.lsp.config('html', {
   filetypes = { "html", "htmldjango" },
-}
+})
 
 -- Lua: lua_ls
-vim.lsp.config.lua_ls = {
+vim.lsp.config('lua_ls', {
   settings = {
     Lua = {
       diagnostics = {
@@ -67,7 +67,7 @@ vim.lsp.config.lua_ls = {
       },
     },
   },
-}
+})
 
 -- Start servers
 vim.lsp.enable({ "pyright", "ruff", "ts_ls", "denols", "html", "lua_ls" })
