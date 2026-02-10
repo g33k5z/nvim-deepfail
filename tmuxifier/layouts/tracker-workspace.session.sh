@@ -53,10 +53,6 @@ if initialize_session ${project}; then
   split_v 30
   split_h 40
   
-  # Wait for nvim to load, then send <Space>e, Ctrl-l, and r
-  sleep 2  # Increase wait time if needed
-  send_keys " e"
-
   # Return to "config" window and select pane 0
   select_window "${project}"
   select_pane 0
