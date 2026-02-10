@@ -29,8 +29,7 @@ if initialize_session ${project}; then
 
   split_h 40
   select_pane 2
-  run_cmd "nu"
-  send_keys "ls"  # Instead of `run_cmd ls` in case `ls` is a command to run in `nu`
+  send_keys "ls -al"  # Instead of `run_cmd ls` in case `ls` is a command to run in `nu`
 
   # Set up a new "nvim-deepfail" window and run commands
   new_window "config"

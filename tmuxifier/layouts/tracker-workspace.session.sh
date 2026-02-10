@@ -27,18 +27,18 @@ if initialize_session ${project}; then
   run_cmd "source env/${project}/bin/activate || mkdir -p env && python3.12 -m venv env/${project} && source env/${project}/bin/activate"
   run_cmd "opencode"
 
-  split_h 40
+  split_h 30
   select_pane 2
   # "dev:web": "cd packages/tracker-web && npm run dev",
   run_cmd "npm run dev:web"
 
-  split_v 40
+  split_v 30
   select_pane 3
   #  "dev:api": "cd packages/tracker-api && poetry run fastapi dev app/main.py",
   run_cmd "source env/${project}/bin/activate || mkdir -p env && python3.12 -m venv env/${project} && source env/${project}/bin/activate"
   run_cmd "npm run dev:api"
 
-  split_v 40
+  split_v 30
   select_pane 4
   #  "dev:analytics": "cd packages/pids-analytics && npm run dev",
   run_cmd "npm run dev:analytics"
