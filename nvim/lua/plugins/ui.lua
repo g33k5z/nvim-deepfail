@@ -307,7 +307,11 @@ return {
 		main = "ibl",
 		config = function()
 			require("ibl").setup({
-				scope = { enabled = true },
+				scope = {
+					enabled = true,
+					show_start = false, -- removes the top underline
+					show_end = false, -- removes the bottom underline
+				},
 			})
 		end,
 	},
