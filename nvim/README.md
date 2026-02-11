@@ -1,7 +1,7 @@
 <table align="center">
   <tr>
     <td>
-      <img src="docs/images/handrolled.png" width="100" />
+      <img src="docs/images/handrolled.png" width="400" />
     </td>
     <td valign="middle">
       <h1>Handrolled Neovim Configuration</h1>
