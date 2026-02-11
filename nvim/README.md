@@ -1,5 +1,14 @@
 
-# Handrolled Neovim Configuration
+<table width="100%">
+  <tr>
+    <td align="left">
+      <img src="../images/handrolled.png" width="100" />
+    </td>
+    <td align="right" valign="middle">
+      <h1>Handrolled Neovim Configuration</h1>
+    </td>
+  </tr>
+</table>
 
 This is a handrolled Neovim configuration migrated from LunarVIM, focusing on maintaining the same functionality while providing more control and customization.
 
@@ -9,6 +18,7 @@ This is a handrolled Neovim configuration migrated from LunarVIM, focusing on ma
 ~/.config/nvim/
 
 ├── init.lua                            # Entry point
+├── .luarc.jsonc                        # Lua language server config
 ├── lazy-lock.json                      # Plugin version lock file
 ├── after/                              # After-load configurations
 │   └── ftplugin/                       # Filetype-specific settings
@@ -20,10 +30,12 @@ This is a handrolled Neovim configuration migrated from LunarVIM, focusing on ma
 │   │   ├── lazy.lua                    # Plugin manager setup
 │   │   └── options.lua                 # Neovim options
 │   ├── keymap/                         # Advanced keymap configurations
-│   │   └── which-key/                  # Which-key integration
+│   │   ├── which-key.lua               # Which-key main config
+│   │   └── which-key/                  # Which-key integration details
 │   │       ├── groups/                 # Keymap groups by functionality
 │   │       │   ├── T-treesitter.lua    # Treesitter keymaps (<leader>T)
 │   │       │   ├── b-buffers.lua       # Buffer management (<leader>b)
+│   │       │   ├── B-messages-buffer-scratch.lua # Msg/Buffer/Scratch (<leader>B)
 │   │       │   ├── d-debug.lua         # Debugging features (<leader>d)
 │   │       │   ├── g-git.lua           # Git operations (<leader>g)
 │   │       │   ├── h-harpoon.lua       # Quick file navigation (<leader>h)
@@ -43,8 +55,10 @@ This is a handrolled Neovim configuration migrated from LunarVIM, focusing on ma
 │   │   └── lsp.lua                     # LSP setup
 │   └── plugins/                        # Plugin configurations
 │       ├── ai.lua                      # AI tools (Copilot, ChatGPT)
+│       ├── completion.lua              # Completion engine (cmp)
 │       ├── editor.lua                  # Editor enhancements
 │       ├── git.lua                     # Git integrations
+│       ├── lsp.lua                     # LSP plugin config
 │       ├── terminal.lua                # Terminal features
 │       └── ui.lua                      # UI components
 ├── setup.sh                            # Installation script
