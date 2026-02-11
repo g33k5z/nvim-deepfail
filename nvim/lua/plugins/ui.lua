@@ -146,6 +146,7 @@ return {
 		config = function()
 			require("bufferline").setup({
 				options = {
+					sort_by = "directory",
 					numbers = "none",
 					close_command = "bdelete! %d",
 					right_mouse_command = "bdelete! %d",
