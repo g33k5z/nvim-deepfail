@@ -1,3 +1,9 @@
+-- NOTE: Ensures that when exiting NeoVim, Zellij returns to normal mode
+vim.api.nvim_create_autocmd("VimLeave", {
+	pattern = "*",
+	command = "silent !zellij action switch-mode normal",
+})
+
 return {
 	-- Alpha (dashboard)
 	{
@@ -255,7 +261,7 @@ return {
 			{ "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
 			{ "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
 			{ "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
-			{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+			--{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
 		},
 	},
 
