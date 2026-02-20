@@ -33,18 +33,18 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         echo "🍺 Checking/Installing system dependencies with Homebrew..."
         # Note: 'neovim' is included here. If users want 0.11+ specifically before it hits stable,
         # they might need 'brew install neovim --HEAD', but 'neovim' is the standard choice.
-        brew install neovim ripgrep fd stylua luarocks tree-sitter-cli
+        brew install neovim ripgrep fd stylua luarocks
     else
         echo "⚠️  Homebrew not found. Please install neovim, ripgrep, fd, stylua, and luarocks manually."
     fi
 fi
 
-# 3. Node/LSP Dependencies
+# 3. Node/LSP/Tree-sitter Dependencies
 if command -v npm &> /dev/null; then
-    echo "📦 Installing global TypeScript tools..."
-    npm install -g typescript-language-server typescript
+    echo "📦 Installing global Node tools..."
+    npm install -g tree-sitter-cli@0.24.7 typescript-language-server typescript
 else
-    echo "⚠️  npm not found. Skipping global TypeScript LSP installation."
+    echo "⚠️  npm not found. Skipping global Node tools installation."
 fi
 
 # 4. Final Permissions
