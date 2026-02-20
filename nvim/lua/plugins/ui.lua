@@ -276,6 +276,9 @@ return {
 				view = {
 					width = 30,
 					adaptive_size = true,
+					winbar = {
+						enable = true,
+					},
 				},
 				renderer = {
 					group_empty = true,

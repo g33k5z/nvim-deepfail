@@ -33,7 +33,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         echo "🍺 Checking/Installing system dependencies with Homebrew..."
         # Note: 'neovim' is included here. If users want 0.11+ specifically before it hits stable,
         # they might need 'brew install neovim --HEAD', but 'neovim' is the standard choice.
-        brew install neovim ripgrep fd stylua luarocks
+        brew install neovim ripgrep fd stylua luarocks tree-sitter-cli
     else
         echo "⚠️  Homebrew not found. Please install neovim, ripgrep, fd, stylua, and luarocks manually."
     fi
