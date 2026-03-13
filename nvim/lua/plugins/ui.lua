@@ -35,6 +35,8 @@ return {
 					hl.IndentBlanklineContextChar = { fg = c.dark5 }
 					hl.TSConstructor = { fg = c.blue1 }
 					hl.TSTagDelimiter = { fg = c.dark5 }
+					hl.Folded = { bg = "none", fg = c.comment }
+					hl.FoldColumn = { bg = "none", fg = c.comment }
 				end,
 			})
 			vim.cmd.colorscheme("tokyonight")
@@ -322,6 +324,72 @@ return {
 		"numToStr/Comment.nvim",
 		config = function()
 			require("Comment").setup()
+		end,
+	},
+
+	-- Toggle comments visibility
+	{
+		"soemre/commentless.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		event = { "BufReadPost", "BufNewFile" },
+		opts = {
+			hide_following_blank_lines = true,
+			foldtext = function(count)
+				return " 󰆈 (" .. count .. " lines hidden)"
+			end,
+		},
+		config = function(_, opts)
+			require("commentless").setup(opts)
+
+			-- Patch to support Python docstrings
+			local utils = require("commentless.utils")
+			utils.is_comment = function(lnum)
+				local indention = vim.fn.indent(lnum)
+				local ok, node = pcall(vim.treesitter.get_node, { pos = { lnum - 1, indention } })
+				if not ok or not node then
+					return false
+				end
+
+				if node:type():match("comment") then
+					return true
+				end
+
+				if vim.bo.filetype == "python" then
+					local n = node
+					while n and n:type() ~= "expression_statement" do
+						n = n:parent()
+					end
+
+					if n and n:type() == "expression_statement" then
+						local expr = n:child(0)
+						while expr and expr:type() == "parenthesized_expression" do
+							local found = false
+							for i = 0, expr:child_count() - 1 do
+								local c = expr:child(i)
+								if c:type() ~= "(" and c:type() ~= ")" and c:type() ~= "comment" then
+									expr = c
+									found = true
+									break
+								end
+							end
+							if not found then
+								break
+							end
+						end
+
+						if expr and expr:type() == "string" then
+							local start_node = expr:child(0)
+							if start_node then
+								local start_text = vim.treesitter.get_node_text(start_node, 0)
+								if start_text:match('^"""') or start_text:match("^'''") then
+									return true
+								end
+							end
+						end
+					end
+				end
+				return false
+			end
 		end,
 	},
 

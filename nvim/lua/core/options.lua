@@ -30,6 +30,10 @@ opt.updatetime = 250      -- Faster completion
 opt.mouse = "a"           -- Enable mouse mode
 opt.clipboard = "unnamedplus" -- Use system clipboard
 
+-- Folding (for commentless.nvim)
+opt.foldminlines = 0     -- Allow hiding single-line comments
+opt.fillchars = "fold: " -- Keep the hidden line clean (no dots/dashes)
+
 -- Disable transparent background from LunarVIM config
 --[[
 vim.cmd([=[
