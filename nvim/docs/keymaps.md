@@ -72,6 +72,10 @@ For a visual guide on how to discover keybindings using Which-Key, see the **[Wh
 
 - `<leader>r` - Refactoring menu
 
+### Visibility
+
+- `<leader>vc` - Toggle comments visibility (supports Python docstrings)
+
 ### Mason
 
 - `<leader>m` - Mason package manager menu

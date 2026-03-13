@@ -45,6 +45,7 @@ Here is a breakdown of the top-level mappings available from the root menu:
 - `s` -> **+Search**: Advanced search options (grep, symbols, etc.)
 - `t` -> **+Trouble**: Diagnostics and issue tracking
 - `T` -> **+Treesitter**: Treesitter information and tools
+- `v` -> **+Visibility**: Toggle UI elements and code features (comments, etc.)
 - `z` -> **+ChatGPT**: ChatGPT integration
 
 ## Customizing Mappings
@@ -57,8 +58,10 @@ To make it easy to find where a specific keybinding is defined, files follow a n
 
 - **Group Files**: Named as `{key}-{name}.lua`.
   - `g-git.lua` -> Contains all mappings under `<leader>g`
-  - `t-trouble.lua` -> Contains all mappings under `<leader>t`
-  - `l-lsp.lua` -> Contains all mappings under `<leader>l`
+- `t-trouble.lua` -> Contains all mappings under `<leader>t`
+- `l-lsp.lua` -> Contains all mappings under `<leader>l`
+- `v-visibility.lua` -> Contains all mappings under `<leader>v`
+
 - **Single Mappings**: The `single-mappings.lua` file is used for top-level actions that don't have a sub-menu (like `<leader>w` for Save or `<leader>f` for Find File).
 
 The `loader.lua` script automatically scans this directory and registers all mappings found within these files. To add a new group, simply create a new file following the `{key}-{name}.lua` pattern and return a table of mappings.
