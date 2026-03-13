@@ -339,16 +339,46 @@ return {
 			end,
 		},
 		config = function(_, opts)
+			local internal = require("commentless.internal")
+			
+			-- 1. Initialize inherited state with safe strings to prevent evaluation errors (zeros)
+			internal._inherited = {
+				foldexpr = "0",
+				foldtext = "foldtext()",
+			}
+			
+			-- 2. Prevent the plugin from hijacking global folding options
+			internal.setup = function() end 
 			require("commentless").setup(opts)
 
-			-- Patch to support Python docstrings
+			-- 3. Only enable buffer-locally for specific filetypes
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = { "python", "rust", "typescript", "javascript", "cpp", "c", "bash", "sh" },
+				callback = function()
+					local req_int = "v:lua.require'commentless.internal'"
+					vim.opt_local.foldmethod = "expr"
+					vim.opt_local.foldexpr = req_int .. ".foldexpr()"
+					vim.opt_local.foldtext = req_int .. ".foldtext()"
+				end,
+			})
+
+			-- 4. Explicitly ensure Lua remains untouched
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = "lua",
+				callback = function()
+					vim.opt_local.foldmethod = "manual"
+					vim.opt_local.foldexpr = "0"
+					vim.opt_local.foldtext = "foldtext()"
+				end,
+			})
+
+			-- 5. Robust Python docstring patch
 			local utils = require("commentless.utils")
 			utils.is_comment = function(lnum)
-				local indention = vim.fn.indent(lnum)
-				local ok, node = pcall(vim.treesitter.get_node, { pos = { lnum - 1, indention } })
-				if not ok or not node then
-					return false
-				end
+				if vim.bo.filetype == "lua" then return false end
+				
+				local ok, node = pcall(vim.treesitter.get_node, { pos = { lnum - 1, vim.fn.indent(lnum) } })
+				if not ok or not node then return false end
 
 				if node:type():match("comment") then
 					return true
@@ -362,21 +392,6 @@ return {
 
 					if n and n:type() == "expression_statement" then
 						local expr = n:child(0)
-						while expr and expr:type() == "parenthesized_expression" do
-							local found = false
-							for i = 0, expr:child_count() - 1 do
-								local c = expr:child(i)
-								if c:type() ~= "(" and c:type() ~= ")" and c:type() ~= "comment" then
-									expr = c
-									found = true
-									break
-								end
-							end
-							if not found then
-								break
-							end
-						end
-
 						if expr and expr:type() == "string" then
 							local start_node = expr:child(0)
 							if start_node then
