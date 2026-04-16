@@ -64,6 +64,11 @@ return {
 		desc = "Diff main...HEAD",
 	},
 	{
+		"<leader>gDM",
+		"<cmd>DiffviewOpen older master..HEAD<cr>",
+		desc = "Diff master...HEAD",
+	},
+	{
 		"<leader>gDp",
 		"<cmd>DiffviewFileHistory --range=main..HEAD<cr>",
 		desc = "Commit-by-commit (Branch)",
