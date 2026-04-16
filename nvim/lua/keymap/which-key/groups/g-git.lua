@@ -65,8 +65,8 @@ return {
 	},
 	{
 		"<leader>gDM",
-		"<cmd>DiffviewOpen older master..HEAD<cr>",
-		desc = "Diff master...HEAD",
+		"<cmd>DiffviewOpen master..HEAD<cr>",
+		desc = "Diff older master...HEAD",
 	},
 	{
 		"<leader>gDp",
