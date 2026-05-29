@@ -46,6 +46,13 @@ return {
 		end,
 	},
 
+	-- ts-comments (commenting plugin)
+	{
+		"folke/ts-comments.nvim",
+		opts = {},
+		event = "VeryLazy",
+	},
+
 	-- Telescope (fuzzy finder)
 	{
 		"nvim-telescope/telescope.nvim",
@@ -323,14 +330,22 @@ return {
 		"ThePrimeagen/vim-be-good",
 	},
 
+	-- Project Manager
+	-- {
+	-- 	"charliealbright/projectmgr.nvim",
+	-- 	lazy = false, -- Load early to handle root directories
+	-- 	opts = {
+	-- 		-- Your configuration rules here
+	-- 	},
+	-- },
 	-- nvim-tree follow project root
-	{
-		"ahmedkhalf/project.nvim",
-		config = function()
-			require("project_nvim").setup({
-				detection_methods = { "lsp", "pattern" },
-				patterns = { ".git", "Makefile", "package.json", ".toml" },
-			})
-		end,
-	},
+	-- {
+	-- 	"ahmedkhalf/project.nvim",
+	-- 	config = function()
+	-- 		require("project_nvim").setup({
+	-- 			detection_methods = { "lsp", "pattern" },
+	-- 			patterns = { ".git", "Makefile", "package.json", ".toml" },
+	-- 		})
+	-- 	end,
+	-- },
 }

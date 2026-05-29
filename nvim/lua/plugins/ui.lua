@@ -320,12 +320,12 @@ return {
 	},
 
 	-- Comments
-	{
-		"numToStr/Comment.nvim",
-		config = function()
-			require("Comment").setup()
-		end,
-	},
+	-- {
+	-- 	"numToStr/Comment.nvim",
+	-- 	config = function()
+	-- 		require("Comment").setup()
+	-- 	end,
+	-- },
 
 	-- Toggle comments visibility
 	{
@@ -340,15 +340,15 @@ return {
 		},
 		config = function(_, opts)
 			local internal = require("commentless.internal")
-			
+
 			-- 1. Initialize inherited state with safe strings to prevent evaluation errors (zeros)
 			internal._inherited = {
 				foldexpr = "0",
 				foldtext = "foldtext()",
 			}
-			
+
 			-- 2. Prevent the plugin from hijacking global folding options
-			internal.setup = function() end 
+			internal.setup = function() end
 			require("commentless").setup(opts)
 
 			-- 3. Only enable buffer-locally for specific filetypes
@@ -375,10 +375,14 @@ return {
 			-- 5. Robust Python docstring patch
 			local utils = require("commentless.utils")
 			utils.is_comment = function(lnum)
-				if vim.bo.filetype == "lua" then return false end
-				
+				if vim.bo.filetype == "lua" then
+					return false
+				end
+
 				local ok, node = pcall(vim.treesitter.get_node, { pos = { lnum - 1, vim.fn.indent(lnum) } })
-				if not ok or not node then return false end
+				if not ok or not node then
+					return false
+				end
 
 				if node:type():match("comment") then
 					return true
