@@ -11,7 +11,7 @@
 
 This is a handrolled Neovim configuration migrated from [LunarVIM](https://www.lunarvim.org/), focusing on maintaining the same functionality while providing more control and customization.
 
-## 📚 Documentation
+## Documentation
 
 - **[Architecture & Structure](docs/architecture.md)** - How the configuration is organized.
 - **[Which-Key Discovery](docs/which-key.md)** - Visual guide to keybindings and discovery.
@@ -19,16 +19,21 @@ This is a handrolled Neovim configuration migrated from [LunarVIM](https://www.l
 
 ## ✨ Features
 
-- ⚡ **Modern Neovim 0.11+** optimized
-- 🚀 **Fast startup** with lazy-loading plugins via [lazy.nvim](https://github.com/folke/lazy.nvim)
-- 🎨 **Tokyo Night** color scheme for a clean UI
-- 🧠 **Full LSP** support with advanced configuration
-- 🔍 **Fuzzy finding** with Telescope
-- 🐙 **Git integration** with Gitsigns and Lazygit
-- 📝 **AI assistance** with GitHub Copilot and ChatGPT
-- 🐛 **Debugging** with DAP
+- **Modern Neovim 0.12+** optimized
+- **Fast startup** with lazy-loading plugins via [lazy.nvim](https://github.com/folke/lazy.nvim)
+- **Tokyo Night** color scheme for a clean UI
+- **Full LSP** support with advanced configuration
+- **Fuzzy finding** with Telescope
+- **Git integration** with Gitsigns and Lazygit
+- **AI assistance** with GitHub Copilot and ChatGPT
+- **Debugging** with DAP
+- **Production-ready** used daily for professional work
+    - **Rust** with rust-analyzer, cargo, and clippy
+    - **Python** with pyright, black, and pyright
+    - **Typescript** with tsserver, eslint, and prettier
+    - **Other languages** will need configuration
 
-## 🛠️ Installation
+## Installation
 
 1. Run the setup script:
    ```bash
@@ -42,7 +47,7 @@ This is a handrolled Neovim configuration migrated from [LunarVIM](https://www.l
 
 3. Lazy.nvim will automatically install all plugins on first launch.
 
-## 🎨 Customization
+## Customization
 
 See the **[Architecture](docs/architecture.md)** document for details on how to modify options, plugins, and keymaps.
 
