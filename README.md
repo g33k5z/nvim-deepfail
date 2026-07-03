@@ -4,10 +4,10 @@ young bones heal quickly edition
 ![inglourious basterds](images/ex_layout_result.png)
 
 
-> Oringin story here is my painful switch to nvim from vim, but my supprising productivity now that I don't spend all day tweaking a custom color theme
+> Origin story here is my painful switch to nvim from vim, but my supprising productivity now that I don't spend all day tweaking a custom color theme
 
-Current [nvim config](./nvim) is a handrolled version of [LunarVIM](https://www.lunarvim.org/) with opinionated customizations. 
-
+Current [nvim config](./nvim) is a handrolled version of [LunarVIM](https://www.lunarvim.org/) with modern nvim 12+, and customizations.
+- I got used to the LunarVIM opinionated look and feel, but the LV project is died. rip the homie.
 
 ### tmux 
 - [tmux](./docs/tmux.md) - A terminal multiplexer for managing multiple shell sessions.
