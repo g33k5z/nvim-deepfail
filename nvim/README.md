@@ -9,7 +9,7 @@
   </tr>
 </table>
 
-This is a handrolled Neovim configuration migrated from [LunarVIM](https://www.lunarvim.org/), focusing on maintaining the same functionality while providing more control and customization.
+This is a handrolled Neovim configuration migrated from [LunarVIM](https://www.lunarvim.org/), focusing on maintaining the same functionality++ for current `Neovim` releases.
 
 ## Documentation
 

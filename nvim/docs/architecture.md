@@ -1,6 +1,6 @@
 # Architecture & Structure
 
-This document describes the directory structure and the purpose of various files in this modern Neovim (0.11+) configuration.
+This document describes the directory structure and the purpose of various files in this modern Neovim (0.12+) configuration.
 
 ## Directory Structure
 

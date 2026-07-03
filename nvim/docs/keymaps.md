@@ -45,6 +45,9 @@ For a visual guide on how to discover keybindings using Which-Key, see the **[Wh
 - `<leader>gg` - Lazygit
 - `<leader>gb` - Blame line
 - `<leader>gd` - Diff this
+- `<leader>gDm` - Diff this branch with main
+- `<leader>gDM` - Diff this branch with master (for older repos)
+- `<leader>gDc` - Close diff view
 
 ### Terminal
 
