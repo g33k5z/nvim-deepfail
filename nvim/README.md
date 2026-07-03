@@ -27,7 +27,7 @@ This is a handrolled Neovim configuration migrated from [LunarVIM](https://www.l
 - **Git integration** with Gitsigns and Lazygit
 - **AI assistance** with GitHub Copilot and ChatGPT
 - **Debugging** with DAP
-- **Production-ready** used daily for professional work
+- **Production-ready** used daily for professional development
     - **Rust** with rust-analyzer, cargo, and clippy
     - **Python** with pyright, black, and pyright
     - **Typescript** with tsserver, eslint, and prettier
@@ -35,17 +35,21 @@ This is a handrolled Neovim configuration migrated from [LunarVIM](https://www.l
 
 ## Installation
 
-1. Run the setup script:
+- Install Neovim 0.12 or later 
+  - see [Neovim Installation](/docs/nvim-version-manager-bob.md) for version management with Bob
+
+
+- Run the setup script:
    ```bash
    ~/.config/nvim/setup.sh
    ```
 
-2. Launch Neovim:
+- Launch Neovim:
    ```bash
    nvim
    ```
 
-3. Lazy.nvim will automatically install all plugins on first launch.
+- Lazy.nvim will automatically install all plugins on first launch.
 
 ## Customization
 

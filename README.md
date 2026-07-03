@@ -10,7 +10,7 @@ young bones heal quickly edition
 
 Story here is my painful switch to nvim from vim, but my supprising productivity now that I don't spend all day tweaking a custom color theme
 
-- Grabbed lunarvim as a base (shutup)
+
 - plugins
   - Python everything (shutup)
     - LSP: pyright
@@ -22,15 +22,10 @@ Story here is my painful switch to nvim from vim, but my supprising productivity
   - bunch of random ass others 
 
 - whichkey
-  - Got ChatGPT more or less up
-  - Copilot is a pita so far to remap in WK
-  - folke/trouble mapped
-  - ThePrimeagen/refactoring mapped 
+  - [mappings](nvim/keymap/whichkey)
 
 - TODOs
-  - cmp: move this spam further away from the cursor
   - copilot WK mapping
-  - gippity overhaul prompt templates to suck less, rework some of the UI
   - override/add translation for vim-regex to pcre
   - obsidian connector
   - finish setting up vimtex/latex everything
@@ -54,191 +49,36 @@ Story here is my painful switch to nvim from vim, but my supprising productivity
 
 
 ### Installed nonsense 
-#### Mason dump 
-    ◍ bash-language-server bashls
-    ◍ black
-    ◍ debugpy
-    ◍ dockerfile-language-server dockerls
-    ◍ html-lsp html
-    ◍ htmlbeautifier
-    ◍ htmx-lsp htmx
-    ◍ jedi-language-server jedi_language_server
-    ◍ lua-language-server lua_ls
-    ◍ prettier
-    ◍ pydocstyle
-    ◍ pylint
-    ◍ pyproject-flake8
-    ◍ pyright
-    ◍ python-lsp-server pylsp
-    ◍ ruff
-    ◍ stylua
-    ◍ tailwindcss-language-server tailwindcss
-    ◍ vim-language-server vimls
-    ◍ yaml-language-server yamlls
-
-#### Lazyvim dump 
-    ● alpha-nvim 1.85ms  VimEnter
-    ● bigfile.nvim 3.49ms  BufReadPre
-    ● bufferline.nvim 10.21ms  User FileOpened
-    ● ChatGPT.nvim 19.44ms  VeryLazy
-    ● cmp-buffer 3.12ms  nvim-cmp
-    ● cmp-nvim-lsp 1.64ms  nvim-cmp
-    ● cmp-path 1.86ms  nvim-cmp
-    ● cmp_luasnip 16.14ms  nvim-cmp
-    ● Comment.nvim 5ms  User FileOpened
-    ● copilot.lua 1.35ms  InsertEnter
-    ● duckytype.nvim 3.52ms  start
-    ● friendly-snippets 0.74ms  LuaSnip
-    ● gitsigns.nvim 4.84ms  User FileOpened
-    ● harpoon 0.93ms  start
-    ● hologram.nvim 5.4ms  start
-    ● indent-blankline.nvim 4.09ms  User FileOpened
-    ● lazy.nvim 9.11ms  init.lua
-    ● lualine.nvim 15.18ms  VimEnter
-    ● LuaSnip 38.06ms  InsertEnter
-    ● lunar.nvim 0.27ms  start
-    ● mason-lspconfig.nvim 18.78ms  nvim-lspconfig
-    ● mason-null-ls.nvim 6.71ms  BufReadPre
-    ● mason.nvim 3.8ms  mason-lspconfig.nvim
-    ● neotest 0.92ms  start
-    ● neotest-python 0.11ms  start
-    ● nlsp-settings.nvim 0.64ms  nvim-lspconfig
-    ● none-ls.nvim 0.59ms  mason-null-ls.nvim
-    ● nui.nvim 0.62ms  ChatGPT.nvim
-    ● nvim-autopairs 7.38ms  InsertEnter
-    ● nvim-cmp 24.84ms  CmdlineEnter
-    ● nvim-dap-python 0.1ms  start
-    ● nvim-lspconfig 20.17ms 󰢱 lspconfig.server_configurations.tailwindcss  tailwind-tools.nvim
-    ● nvim-navic 1.89ms  User FileOpened
-    ● nvim-tree.lua 52.92ms  NvimTreeToggle
-    ● nvim-treesitter 21.79ms  tailwind-tools.nvim
-    ● nvim-ts-context-commentstring 1.27ms 󰢱 ts_context_commentstring  nvim-treesitter
-    ● nvim-web-devicons 0.73ms 󰢱 nvim-web-devicons  nvim-tree.lua
-    ● plenary.nvim 0.85ms  harpoon
-    ● project.nvim 2.48ms 󰢱 telescope._extensions.projects  telescope.nvim
-    ● refactoring.nvim 24.21ms  start
-    ● ripgrep 0.08ms  start
-    ● tailwind-tools.nvim 87.53ms  start
-    ● telescope-fzf-native.nvim 0.37ms  telescope.nvim
-    ● telescope.nvim 36.25ms 󰢱 telescope  tailwind-tools.nvim
-    ● toggleterm.nvim 14.52ms 󰢱 toggleterm.terminal  
-    ● vim-be-good 0.61ms  start
-    ● vim-illuminate 7.81ms  User FileOpened
-    ● vimtex 1.96ms  start
-    ● which-key.nvim 26.78ms  VeryLazy
+- [core](nvim/core)
 
 
 ## Setup (macOS)
 
-### nvim >= 0.10.x
+### nvim (via bob)
 
-Install
-```shell
-brew install neovim
+1.  **Install bob (Neovim version manager)**
+    ```shell
+    brew install bob
+    ```
 
-# https://github.com/neovim/neovim/blob/master/INSTALL.md
-```
+2.  **Install Neovim stable (or nightly)**
+    ```shell
+    bob use stable
+    ```
 
+3.  **Set up `nvim-deepfail` configuration**
+    Clone the repo and sparse checkout the `nvim` folder. Then symlink it to `~/.config/nvim`. See [Sparse Checkout for nvim-deepfail](./docs/sparse-checkout-nvim.md) for detailed instructions.
 
-Refresh shell (or restart it) and check version
-```shell
-source ~/.zshrc
-
-nvim --version
-
-#  NVIM v0.10.2
-#  Build type: Release
-#  LuaJIT 2.1.1727870382
-#  Run "nvim -V1 -v" for more info
-```
-
-### LunarVim (Nightly)
-```shell
-bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
-
-# https://www.lunarvim.org/docs/installation
-```
-
-### tmux
-```shell
-brew install tmux
-
-# https://github.com/tmux/tmux/wiki/Installing
-```
-
-https://github.com/tmux/tmux/wiki/Getting-Started#configuring-tmux
-
-#### tmux package manager
-```shell
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-# https://github.com/tmux-plugins/tpm
-```
+4.  **Install System Dependencies**
+    ```shell
+    brew install ripgrep fd stylua luarocks tree-sitter
+    npm install -g typescript-language-server typescript
+    ```
+    Launch Neovim (`nvim`) to automatically install LazyVim plugins and Mason LSPs/formatters/linters.
 
 
-#### Config
-copy `.tmux.config` to `$HOME` | `~/`
+### [tmux](./docs/tmux.md)
+A terminal multiplexer for managing multiple shell sessions.
 
-Once tmux is running you can press `<LEADER> + I` to install plugins defined in .tmux.conf
-tmux LEADER is defaulted to `CTRL+B`, and will be `CTRL+A` with my config
-
-
-#### Movement between tmux & nvim
-Point here is to navigate between tmux and nvim as naturally as possible, meaning the use of `CTRL` + one of `hjkl`.
-Two parts to this
-- tmux (to nvim): 
-```lua
-# ~/.tmux.conf
-
-set -g @plugin 'christoomey/vim-tmux-navigator'
-```
-- nvim (to tmux): lazy install
-```lua
-# congfig.lua (lvim)
-	{
-		"christoomey/vim-tmux-navigator",
-		cmd = {
-			"TmuxNavigateLeft",
-			"TmuxNavigateDown",
-			"TmuxNavigateUp",
-			"TmuxNavigateRight",
-			"TmuxNavigatePrevious",
-		},
-		keys = {
-			{ "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
-			{ "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
-			{ "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
-			{ "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
-			{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" }, # not sure i like this one, conflicts with lvim modal term
-		},
-	},
-```
-
-
-
-
-#### tmuxifier
-Allows you to create layouts with w/e apps running and split windows you like
-
-```shell
-git clone https://github.com/jimeh/tmuxifier.git ~/.tmuxifier
-
-export PATH="$HOME/.tmuxifier/bin:$PATH"
-
-
-# https://github.com/jimeh/tmuxifier
-```
-
-Add to .zshrc
-```shell
-export PATH="$HOME/.tmuxifier/bin:$PATH"
-eval "$(tmuxifier init -)"
-
-#used for root of tmuxifier layouts
-export DEV_ROOT="~/dev/github"
-
-# https://github.com/jimeh/tmuxifier
-```
-
-##### Example tmuxifier layout (the one I use for this repo)
-https://github.com/g33k5z/nvim-deepfail/blob/4ea6e3b941e14d41fd006a6983763b24528ed5b6/tmuxifier/layouts/nvim-deepfail.session.sh#L1-L52
+### [tmuxifier](./docs/tmuxifier.md)
+A session manager for tmux, allowing you to create and manage complex layouts.
