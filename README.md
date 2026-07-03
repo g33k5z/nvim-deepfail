@@ -7,8 +7,8 @@ young bones heal quickly edition
 Story here is my painful switch to nvim from vim, but my supprising productivity now that I don't spend all day tweaking a custom color theme
 
 
-Current [nvim config] (./nvim) is a handrolled version of [LunarVIM](https://www.lunarvim.org/) with opionated customizations. 
-I use [this config] (./nvim) + `tmux` + `tmuxifier` as my daily driver for development.
+Current [nvim config](./nvim) is a handrolled version of [LunarVIM](https://www.lunarvim.org/) with opionated customizations. 
+I use [this config](./nvim) + `tmux` + `tmuxifier` as my daily driver for development.
 
 - TODOs
   - copilot WK mapping
@@ -25,7 +25,7 @@ A session manager for tmux, allowing you to create and manage complex layouts.
 
 ### Term misc
 - https://www.nerdfonts.com/
-- [Starship] (./starship) 
+- [Starship](./starship) 
 - https://github.com/lsd-rs/lsd
 
 ### Keyremapping 
