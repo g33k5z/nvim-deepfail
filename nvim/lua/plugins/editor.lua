@@ -299,10 +299,47 @@ return {
 	},
 
 	-- Glow (markdown preview)
+	-- {
+	-- 	"ellisonleao/glow.nvim",
+	-- 	config = true,
+	-- 	cmd = "Glow",
+	-- },
+
+	-- Render LaTeX (math preview)
 	{
-		"ellisonleao/glow.nvim",
-		config = true,
-		cmd = "Glow",
+		"techwizrd/render-latex.nvim",
+		ft = "markdown",
+		opts = {
+			image = {
+				backend = "kitty",
+			},
+		},
+	},
+	-- Render Markdown (markdown preview)
+	{
+		"MeanderingProgrammer/render-markdown.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-mini/mini.nvim" }, -- if you use the mini.nvim suite
+		-- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.icons' },        -- if you use standalone mini plugins
+		-- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+		---@module 'render-markdown'
+		---@type render.md.UserConfig
+		opts = {
+			latex = {
+				enabled = true,
+				render_modes = true,
+				converter = { "utftex", "latex2text" },
+				inline = true,
+				block = false,
+				highlight = "RenderMarkdownMath",
+
+				-- 1. Move render away from the 'center' inline baseline
+				position = "center", -- options: 'above' or 'below'
+
+				-- 2. Add structural padding for blocks
+				top_pad = 1,
+				bottom_pad = 1,
+			},
+		},
 	},
 
 	-- VimTex
