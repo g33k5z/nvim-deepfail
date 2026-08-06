@@ -1,6 +1,6 @@
 # Set a custom session root path. Default is `$HOME`.
 # Must be called before `initialize_session`.
-project="depoengine"
+project="depoengine-ui"
 tmuxifier_templates="$(eval echo ~/.tmux/plugins/tmuxifier/layouts)"
 session_root "'$(eval echo $DEV_ROOT)'/${project}/"
 
@@ -28,7 +28,7 @@ if initialize_session ${project}; then
   select_pane 1
   # Kept rather than a bare `source`: pane order is not guaranteed, and uv locks
   # the venv so a concurrent sync serialises instead of colliding.
-  run_cmd "uv sync && source .venv/bin/activate"
+  run_cmd "vite"
 
   split_h 40
   select_pane 2
