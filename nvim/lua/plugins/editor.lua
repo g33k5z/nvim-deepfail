@@ -325,19 +325,19 @@ return {
 		---@type render.md.UserConfig
 		opts = {
 			latex = {
-				enabled = true,
-				render_modes = true,
-				converter = { "utftex", "latex2text" },
-				inline = true,
-				block = false,
-				highlight = "RenderMarkdownMath",
-
-				-- 1. Move render away from the 'center' inline baseline
-				position = "center", -- options: 'above' or 'below'
-
-				-- 2. Add structural padding for blocks
-				top_pad = 1,
-				bottom_pad = 1,
+				enabled = false,
+				-- render_modes = true,
+				-- converter = { "utftex", "latex2text" },
+				-- inline = true,
+				-- block = false,
+				-- highlight = "RenderMarkdownMath",
+				--
+				-- -- 1. Move render away from the 'center' inline baseline
+				-- position = "center", -- options: 'above' or 'below'
+				--
+				-- -- 2. Add structural padding for blocks
+				-- top_pad = 1,
+				-- bottom_pad = 1,
 			},
 		},
 	},
