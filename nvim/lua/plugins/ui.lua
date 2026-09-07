@@ -21,6 +21,7 @@ return {
 					"qf",
 					"vista_kind",
 					"terminal",
+					"snacks_terminal", -- claudecode.nvim's Claude pane
 					"packer",
 					"spectre_panel",
 					"NeogitStatus",
